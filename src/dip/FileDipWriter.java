@@ -32,7 +32,7 @@ public class FileDipWriter extends DipWriter {
     //Taken from https://github.com/yusuke/twitter4j/blob/master/twitter4j-examples/src/main/java/twitter4j/examples/json/SaveRawJSON.java
     private static void save(String rawJSON) throws IOException {
     	String pwd = System.getProperty("user.dir");
-        String fileName = pwd + "randomize this please" + ".json";
+        String fileName = pwd + "/randomize this please" + ".json";
         //System.out.println("Attempting to save to location: " + filename);
         FileOutputStream fos = null;
         OutputStreamWriter osw = null;

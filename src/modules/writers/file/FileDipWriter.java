@@ -8,16 +8,14 @@ import java.io.OutputStreamWriter;
 
 import modules.writers.DipWriter;
 
-import org.apache.commons.lang3.RandomStringUtils;
-
 import dip.DipQueue;
 import json.JSONObject;
 
 public class FileDipWriter extends DipWriter {
-
-	public FileDipWriter(DipQueue q) {
+	FileNamer namer;
+	public FileDipWriter(DipQueue q, FileNamer namer) {
 		super(q);
-		// TODO Auto-generated constructor stub
+		this.namer = namer;
 	}
 	
 	public void run()
@@ -35,9 +33,9 @@ public class FileDipWriter extends DipWriter {
 	}
 	
     //Taken from https://github.com/yusuke/twitter4j/blob/master/twitter4j-examples/src/main/java/twitter4j/examples/json/SaveRawJSON.java
-    private static void save(String rawJSON) throws IOException {
-    	String pwd = System.getProperty("user.dir");
-        String fileName = pwd + "/" + RandomStringUtils.randomAlphabetic(10) + ".json";
+    private void save(String rawJSON) throws IOException {
+//    	String pwd = System.getProperty("user.dir");
+        String fileName = namer.getName();
         //System.out.println("Attempting to save to location: " + filename);
         FileOutputStream fos = null;
         OutputStreamWriter osw = null;

@@ -1,7 +1,9 @@
 package dip;
 
+import dip.DipQueue;
+import dip.DipQueueImpl;
 import modules.writers.mongo.MongoDipWriter;
-import modules.writers.twitter.TwitterDipReader;
+import modules.readers.twitter.TwitterDipReader;
 
 public class Twitter2Mongo {
 

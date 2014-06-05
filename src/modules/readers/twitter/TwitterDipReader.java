@@ -1,4 +1,4 @@
-package modules.writers.twitter;
+package modules.readers.twitter;
 
 import java.io.*;
 

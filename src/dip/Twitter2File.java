@@ -1,20 +1,34 @@
 package dip;
 
-import modules.readers.DipReader;
-import modules.writers.DipWriter;
+import dip.DipQueue;
+import dip.DipQueueImpl;
+import modules.writers.file.FileNamer;
 import modules.writers.file.FileDipWriter;
-import modules.writers.twitter.TwitterDipReader;
+import modules.readers.twitter.TwitterDipReader;
+
+import org.apache.commons.lang3.RandomStringUtils;
 
 public class Twitter2File {
 
 	public static void main(String[] args) {
+		if (args.length < 1) {
+			System.out.println("Need an output path.");
+			return;
+		}
+		
+		final String outpath = args[0];
+		
 		DipQueue q = new DipQueueImpl();
 
-		DipReader reader = new TwitterDipReader(q);
+		TwitterDipReader reader = new TwitterDipReader(q);
 		Thread readerThread = new Thread(reader);
 		readerThread.run();
 		
-		DipWriter writer = new FileDipWriter(q);
+		FileDipWriter writer = new FileDipWriter(q, new FileNamer() {
+			public String getName() {
+				return outpath + "/" + RandomStringUtils.randomAlphabetic(10);
+			}
+		});
 		Thread writerThread = new Thread(writer);
 		writerThread.run();
 

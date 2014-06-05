@@ -1,7 +1,7 @@
 package dip;
 
 public abstract class DipWriter implements Runnable {
-	private DipQueue q;
+	protected DipQueue q;
 
 	public DipWriter(DipQueue q) {
 		this.q = q;

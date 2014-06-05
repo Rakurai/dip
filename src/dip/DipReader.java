@@ -1,7 +1,7 @@
 package dip;
 
 public abstract class DipReader implements Runnable {
-	private DipQueue q;
+	protected DipQueue q;
 
 	public DipReader(DipQueue q) {
 		this.q = q;

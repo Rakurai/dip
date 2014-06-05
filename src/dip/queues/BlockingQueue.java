@@ -1,12 +1,11 @@
-package dip;
+package dip.queues;
 
 import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
 
 import json.JSONObject;
 
-public class DipQueueImpl implements DipQueue {
-	BlockingQueue<JSONObject> queue = new ArrayBlockingQueue<JSONObject>(100);
+public class BlockingQueue implements Queue {
+	ArrayBlockingQueue<JSONObject> queue = new ArrayBlockingQueue<JSONObject>(100);
 	
 	@Override
 	public JSONObject pull() throws Exception {

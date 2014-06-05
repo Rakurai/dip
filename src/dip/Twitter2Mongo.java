@@ -1,30 +1,26 @@
 package dip;
 
-import dip.DipQueue;
-import dip.DipQueueImpl;
-import modules.writers.mongo.MongoDipWriter;
-import modules.readers.twitter.TwitterDipReader;
+import dip.queues.Queue;
+import dip.queues.BlockingQueue;
+import dip.modules.writers.mongo.MongoWriter;
+import dip.modules.readers.twitter.TwitterReader;
 
 public class Twitter2Mongo {
 
 
 	public static void main(String[] args) {
+		Queue queue = new BlockingQueue();
+		Core core = new Core(queue);
+
 		try {
-			DipQueue q = new DipQueueImpl();
-	
-			TwitterDipReader reader = new TwitterDipReader(q);
-			Thread readerThread = new Thread(reader);
-			readerThread.run();
-			
-			MongoDipWriter writer = new MongoDipWriter(q);
+			core.addReader(new TwitterReader(queue));
+
+			MongoWriter writer = new MongoWriter(queue);
 			writer.init("thecave.cs.clemson.edu", 27017, "twitter", "feed");
-			Thread writerThread = new Thread(writer);
-			writerThread.run();
-	
-			readerThread.join();
-			writerThread.join();
-		}
-		catch (Exception e) {
+			core.addWriter(writer);
+
+			core.start();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

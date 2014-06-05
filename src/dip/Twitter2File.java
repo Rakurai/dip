@@ -1,10 +1,10 @@
 package dip;
 
-import dip.DipQueue;
-import dip.DipQueueImpl;
-import modules.writers.file.FileNamer;
-import modules.writers.file.FileDipWriter;
-import modules.readers.twitter.TwitterDipReader;
+import dip.queues.Queue;
+import dip.queues.BlockingQueue;
+import dip.modules.writers.file.FileNamer;
+import dip.modules.writers.file.FileWriter;
+import dip.modules.readers.twitter.TwitterReader;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
@@ -17,33 +17,22 @@ public class Twitter2File {
 		}
 		
 		final String outpath = args[0];
-		
-		DipQueue q = new DipQueueImpl();
 
-		TwitterDipReader reader = new TwitterDipReader(q);
-		Thread readerThread = new Thread(reader);
-		readerThread.run();
-		
-		FileDipWriter writer = new FileDipWriter(q, new FileNamer() {
+		Queue queue = new BlockingQueue();
+		Core core = new Core(queue);
+
+		core.addReader(new TwitterReader(queue));
+		core.addWriter(new FileWriter(queue, new FileNamer() {
 			public String getName() {
 				return outpath + "/" + RandomStringUtils.randomAlphabetic(10);
 			}
-		});
-		Thread writerThread = new Thread(writer);
-		writerThread.run();
+		}));
 
 		try {
-			readerThread.join();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			writerThread.join();
-		} catch (InterruptedException e) {
+			core.start();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-
 }

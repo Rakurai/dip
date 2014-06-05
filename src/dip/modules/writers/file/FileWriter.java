@@ -1,4 +1,4 @@
-package modules.writers.file;
+package dip.modules.writers.file;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -6,14 +6,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
-import modules.writers.DipWriter;
+import dip.modules.writers.Writer;
 
-import dip.DipQueue;
+import dip.queues.Queue;
 import json.JSONObject;
 
-public class FileDipWriter extends DipWriter {
+public class FileWriter extends Writer {
 	FileNamer namer;
-	public FileDipWriter(DipQueue q, FileNamer namer) {
+	public FileWriter(Queue q, FileNamer namer) {
 		super(q);
 		this.namer = namer;
 	}

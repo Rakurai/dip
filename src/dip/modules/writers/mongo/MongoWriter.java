@@ -1,6 +1,6 @@
-package modules.writers.mongo;
+package dip.modules.writers.mongo;
 
-import modules.writers.DipWriter;
+import dip.modules.writers.Writer;
 import json.JSONObject;
 
 import com.mongodb.DB;
@@ -9,14 +9,14 @@ import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.util.JSON;
 
-import dip.DipQueue;
+import dip.queues.Queue;
 
-public class MongoDipWriter extends DipWriter {
+public class MongoWriter extends Writer {
 	private static MongoClient client = null;
 	private DB db;
 	private DBCollection collection;
 	
-	public MongoDipWriter(DipQueue q) {
+	public MongoWriter(Queue q) {
 		super(q);
 	}
 	

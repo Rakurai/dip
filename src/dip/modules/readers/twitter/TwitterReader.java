@@ -1,9 +1,9 @@
-package modules.readers.twitter;
+package dip.modules.readers.twitter;
 
 import java.io.*;
 
-import dip.DipQueue;
-import modules.readers.DipReader;
+import dip.queues.Queue;
+import dip.modules.readers.Reader;
 import json.JSONException;
 import json.JSONObject;
 import twitter4j.StallWarning;
@@ -17,9 +17,9 @@ import twitter4j.TwitterStream;
 //import twitter4j.conf.ConfigurationBuilder;
 import twitter4j.TwitterObjectFactory;
 
-public class TwitterDipReader extends DipReader {
+public class TwitterReader extends Reader {
 	
-	public TwitterDipReader(DipQueue q) {
+	public TwitterReader(Queue q) {
 		super(q);
 		// TODO Auto-generated constructor stub
 	}

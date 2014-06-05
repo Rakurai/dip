@@ -1,5 +1,10 @@
 package dip;
 
+import modules.readers.DipReader;
+import modules.writers.DipWriter;
+import modules.writers.file.FileDipWriter;
+import modules.writers.twitter.TwitterDipReader;
+
 public class Twitter2File {
 
 	public static void main(String[] args) {

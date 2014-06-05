@@ -1,4 +1,4 @@
-package dip;
+package modules.writers.file;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -6,8 +6,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
+import modules.writers.DipWriter;
+
 import org.apache.commons.lang3.RandomStringUtils;
 
+import dip.DipQueue;
 import json.JSONObject;
 
 public class FileDipWriter extends DipWriter {

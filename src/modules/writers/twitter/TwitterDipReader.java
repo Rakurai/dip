@@ -1,10 +1,11 @@
-package dip;
+package modules.writers.twitter;
 
 import java.io.*;
 
+import dip.DipQueue;
+import modules.readers.DipReader;
 import json.JSONException;
 import json.JSONObject;
-
 import twitter4j.StallWarning;
 import twitter4j.Status;
 import twitter4j.StatusDeletionNotice;

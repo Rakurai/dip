@@ -1,6 +1,6 @@
 package dip;
 
-public class Main {
+public class Twitter2File {
 
 	public static void main(String[] args) {
 		DipQueue q = new DipQueueImpl();

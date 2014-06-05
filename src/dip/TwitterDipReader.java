@@ -2,7 +2,16 @@ package dip;
 
 import java.io.*;
 
-import twitter4j.*;
+import json.JSONException;
+import json.JSONObject;
+
+import twitter4j.StallWarning;
+import twitter4j.Status;
+import twitter4j.StatusDeletionNotice;
+import twitter4j.StatusListener;
+import twitter4j.TwitterStreamFactory;
+//import twitter4j.*;
+import twitter4j.TwitterStream;
 //import twitter4j.auth.AccessToken;
 //import twitter4j.conf.ConfigurationBuilder;
 import twitter4j.TwitterObjectFactory;
@@ -14,7 +23,7 @@ public class TwitterDipReader extends DipReader {
 		// TODO Auto-generated constructor stub
 	}
 	
-    public void run() throws TwitterException {
+    public void run() {
         TwitterStream twitterStream = new TwitterStreamFactory().getInstance();
         StatusListener listener = new StatusListener() {
             @Override
@@ -23,11 +32,17 @@ public class TwitterDipReader extends DipReader {
                 //System.out.println(status.getUser().getName() + " : " + status.getText());
                 String rawjson = TwitterObjectFactory.getRawJSON(status);
                 try {
-                        q.post(rawjson);
+                        q.push(new JSONObject(rawjson));
                 } catch (IOException e) {
                         e.printStackTrace();
                         System.out.println("Failed to post tweet to queue.");
-                }
+                } catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
 
             @Override

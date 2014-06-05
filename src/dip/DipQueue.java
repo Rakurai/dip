@@ -3,6 +3,6 @@ package dip;
 import json.JSONObject;
 
 public interface DipQueue {
-	public JSONObject pull();
-	public void push(JSONObject obj);
+	public JSONObject pull() throws Exception;
+	public void push(JSONObject obj) throws Exception;
 }

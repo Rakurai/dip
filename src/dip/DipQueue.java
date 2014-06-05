@@ -1,5 +1,8 @@
 package dip;
 
-public class DipQueue {
+import json.JSONObject;
 
+public interface DipQueue {
+	public JSONObject pull();
+	public void push(JSONObject obj);
 }

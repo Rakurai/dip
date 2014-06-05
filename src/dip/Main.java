@@ -3,7 +3,7 @@ package dip;
 public class Main {
 
 	public static void main(String[] args) {
-		DipQueue q = new DipQueue();
+		DipQueue q = new DipQueueImpl();
 
 		DipReader reader = new TwitterDipReader(q);
 		Thread readerThread = new Thread(reader);

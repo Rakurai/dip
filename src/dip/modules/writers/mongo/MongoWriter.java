@@ -1,6 +1,8 @@
 package dip.modules.writers.mongo;
 
-import dip.modules.writers.Writer;
+import java.util.concurrent.BlockingQueue;
+
+import dip.modules.writers.AbstractWriter;
 import json.JSONObject;
 
 import com.mongodb.DB;
@@ -9,14 +11,12 @@ import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.util.JSON;
 
-import dip.queues.Queue;
-
-public class MongoWriter extends Writer {
+public class MongoWriter extends AbstractWriter<JSONObject> {
 	private static MongoClient client = null;
 	private DB db;
 	private DBCollection collection;
 	
-	public MongoWriter(Queue q) {
+	public MongoWriter(BlockingQueue<JSONObject> q) {
 		super(q);
 	}
 	
@@ -42,7 +42,7 @@ public class MongoWriter extends Writer {
 	public void run() {
 		while (true) {
 			try {
-				JSONObject json = q.pull();
+				JSONObject json = q.take();
 				DBObject bson = (DBObject) JSON.parse(json.toString());
 				collection.insert(bson);
 			} catch (Exception e) {

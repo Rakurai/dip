@@ -5,15 +5,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.concurrent.BlockingQueue;
 
-import dip.modules.writers.Writer;
+import dip.modules.writers.AbstractWriter;
 
-import dip.queues.Queue;
-import json.JSONObject;
-
-public class FileWriter extends Writer {
+public class FileWriter extends AbstractWriter<String> {
 	FileNamer namer;
-	public FileWriter(Queue q, FileNamer namer) {
+	public FileWriter(BlockingQueue<String> q, FileNamer namer) {
 		super(q);
 		this.namer = namer;
 	}
@@ -23,8 +21,8 @@ public class FileWriter extends Writer {
 		while(true)
 		{
 			try {
-				JSONObject stuff = q.pull();
-				save(stuff.toString());
+				String stuff = q.take();
+				save(stuff);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

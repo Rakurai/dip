@@ -1,9 +1,7 @@
 package dip.modules.readers.twitter;
 
-import java.io.*;
-
-import dip.queues.Queue;
-import dip.modules.readers.Reader;
+import java.util.concurrent.BlockingQueue;
+import dip.modules.readers.AbstractReader;
 import json.JSONException;
 import json.JSONObject;
 import twitter4j.StallWarning;
@@ -17,9 +15,9 @@ import twitter4j.TwitterStream;
 //import twitter4j.conf.ConfigurationBuilder;
 import twitter4j.TwitterObjectFactory;
 
-public class TwitterReader extends Reader {
+public class TwitterReader extends AbstractReader<JSONObject> {
 	
-	public TwitterReader(Queue q) {
+	public TwitterReader(BlockingQueue<JSONObject> q) {
 		super(q);
 		// TODO Auto-generated constructor stub
 	}
@@ -33,10 +31,7 @@ public class TwitterReader extends Reader {
                 //System.out.println(status.getUser().getName() + " : " + status.getText());
                 String rawjson = TwitterObjectFactory.getRawJSON(status);
                 try {
-                        q.push(new JSONObject(rawjson));
-                } catch (IOException e) {
-                        e.printStackTrace();
-                        System.out.println("Failed to post tweet to queue.");
+                        q.put(new JSONObject(rawjson));
                 } catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

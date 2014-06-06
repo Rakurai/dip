@@ -1,6 +1,8 @@
-package dip.modules;
+package dip.modules.converters;
 
 import java.util.concurrent.BlockingQueue;
+
+import dip.modules.Module;
 
 public abstract class AbstractConverter<INPUT, OUTPUT> implements Module {
 	private BlockingQueue<INPUT> input;

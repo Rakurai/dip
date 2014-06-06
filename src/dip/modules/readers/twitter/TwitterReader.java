@@ -2,8 +2,6 @@ package dip.modules.readers.twitter;
 
 import java.util.concurrent.BlockingQueue;
 import dip.modules.readers.AbstractReader;
-import json.JSONException;
-import json.JSONObject;
 import twitter4j.StallWarning;
 import twitter4j.Status;
 import twitter4j.StatusDeletionNotice;
@@ -15,9 +13,9 @@ import twitter4j.TwitterStream;
 //import twitter4j.conf.ConfigurationBuilder;
 import twitter4j.TwitterObjectFactory;
 
-public class TwitterReader extends AbstractReader<JSONObject> {
+public class TwitterReader extends AbstractReader<String> {
 	
-	public TwitterReader(BlockingQueue<JSONObject> q) {
+	public TwitterReader(BlockingQueue<String> q) {
 		super(q);
 		// TODO Auto-generated constructor stub
 	}
@@ -31,10 +29,7 @@ public class TwitterReader extends AbstractReader<JSONObject> {
                 //System.out.println(status.getUser().getName() + " : " + status.getText());
                 String rawjson = TwitterObjectFactory.getRawJSON(status);
                 try {
-                        q.put(new JSONObject(rawjson));
-                } catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+                        q.put(rawjson);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

@@ -3,8 +3,7 @@ package dip;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
-import json.JSONObject;
-import dip.modules.AbstractConverter;
+import dip.core.Core;
 import dip.modules.writers.file.FileNamer;
 import dip.modules.writers.file.FileWriter;
 import dip.modules.readers.twitter.TwitterReader;
@@ -21,25 +20,17 @@ public class Twitter2File {
 		
 		final String outpath = args[0];
 
-		BlockingQueue<JSONObject> inputQueue = new ArrayBlockingQueue<JSONObject>(100);
-		BlockingQueue<String> outputQueue = new ArrayBlockingQueue<String>(100);
+		BlockingQueue<String> queue = new ArrayBlockingQueue<String>(100);
 		Core core = new Core();
 
-		core.addReader(new TwitterReader(inputQueue));
+		core.addReader(new TwitterReader(queue));
 
-		core.addWriter(new FileWriter(outputQueue, new FileNamer() {
+		core.addWriter(new FileWriter(queue, new FileNamer() {
 			public String getName() {
 				return outpath + "/" + RandomStringUtils.randomAlphabetic(10);
 			}
 		}));
 
-		core.addConverter(new AbstractConverter<JSONObject, String>(inputQueue, outputQueue) {
-			@Override
-			protected String convert(JSONObject obj) {
-				return obj.toString();
-			}
-		});
-		
 		try {
 			core.start();
 		} catch (Exception e) {

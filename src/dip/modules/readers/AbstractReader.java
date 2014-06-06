@@ -2,9 +2,7 @@ package dip.modules.readers;
 
 import java.util.concurrent.BlockingQueue;
 
-import dip.modules.Module;
-
-public abstract class AbstractReader<INPUT> implements Runnable, Module {
+public abstract class AbstractReader<INPUT> implements Runnable, Reader {
 	protected BlockingQueue<INPUT> q;
 
 	public AbstractReader(BlockingQueue<INPUT> q) {

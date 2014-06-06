@@ -9,6 +9,19 @@ public abstract class AbstractReader<INPUT> implements Runnable, Reader {
 		this.q = q;
 	}
 
+	protected abstract INPUT read();
+
+	@Override
+	public void run() {
+		while (true) {
+			try {
+				q.put(read());
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 	@Override
 	public void cleanup() {
 		// do nothing

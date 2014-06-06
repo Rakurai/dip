@@ -1,7 +1,9 @@
 package dip.modules.readers.twitter;
 
 import java.util.concurrent.BlockingQueue;
+
 import dip.modules.readers.AbstractReader;
+import json.JSONException;
 import twitter4j.StallWarning;
 import twitter4j.Status;
 import twitter4j.StatusDeletionNotice;
@@ -20,6 +22,7 @@ public class TwitterReader extends AbstractReader<String> {
 		// TODO Auto-generated constructor stub
 	}
 	
+	@Override
     public void run() {
         TwitterStream twitterStream = new TwitterStreamFactory().getInstance();
         StatusListener listener = new StatusListener() {
@@ -64,5 +67,11 @@ public class TwitterReader extends AbstractReader<String> {
         twitterStream.addListener(listener);
         twitterStream.sample();
     }
+
+	@Override
+	protected String read() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

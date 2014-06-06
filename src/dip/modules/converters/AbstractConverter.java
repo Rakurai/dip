@@ -13,7 +13,7 @@ public abstract class AbstractConverter<INPUT, OUTPUT> implements Module {
 		this.output = output;
 	}
 
-	protected abstract OUTPUT convert(INPUT obj);
+	protected abstract OUTPUT convert(INPUT obj) throws Exception;
 	
 	@Override
 	public void run() {

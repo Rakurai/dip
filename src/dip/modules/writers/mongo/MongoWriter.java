@@ -37,14 +37,9 @@ public class MongoWriter extends AbstractWriter<DBObject> {
 	}
 
 	@Override
-	public void run() {
+	public void write(DBObject obj) {
 		while (true) {
-			try {
-				DBObject bson = q.take();
-				collection.insert(bson);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			collection.insert(obj);
 		}
 	}
 }

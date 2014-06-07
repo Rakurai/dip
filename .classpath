@@ -9,5 +9,7 @@
 	<classpathentry kind="lib" path="jars/twitter4j-media-support-4.0.1.jar"/>
 	<classpathentry kind="lib" path="jars/twitter4j-stream-4.0.1.jar"/>
 	<classpathentry kind="lib" path="jars/mongo-2.10.1.jar"/>
+	<classpathentry kind="lib" path="jars/hbc-core-2.1.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="jars/hbc-twitter4j-2.1.1-SNAPSHOT.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

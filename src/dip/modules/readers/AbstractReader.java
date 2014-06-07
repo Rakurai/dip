@@ -2,23 +2,25 @@ package dip.modules.readers;
 
 import java.util.concurrent.BlockingQueue;
 
-public abstract class AbstractReader<INPUT> implements Runnable, Reader {
+import dip.modules.AbstractModule;
+import dip.modules.RunState;
+
+public abstract class AbstractReader<INPUT> extends AbstractModule implements Reader {
 	protected BlockingQueue<INPUT> q;
 
 	public AbstractReader(BlockingQueue<INPUT> q) {
 		this.q = q;
 	}
 
-	protected abstract INPUT read();
+	protected abstract INPUT read() throws Exception;
 
 	@Override
 	public void run() {
-		while (true) {
-			try {
+		try {
+			while (runState == RunState.RUN)
 				q.put(read());
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 

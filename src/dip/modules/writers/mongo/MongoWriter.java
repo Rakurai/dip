@@ -27,19 +27,19 @@ public class MongoWriter extends AbstractWriter<DBObject> {
 	}
 
 	@Override
+	public void write(DBObject obj) {
+		while (true) {
+			collection.insert(obj);
+		}
+	}
+
+	@Override
 	public synchronized void cleanup() {
 		super.cleanup();
 
 		if (client != null) {
 			client.close();
 			client = null;
-		}
-	}
-
-	@Override
-	public void write(DBObject obj) {
-		while (true) {
-			collection.insert(obj);
 		}
 	}
 }

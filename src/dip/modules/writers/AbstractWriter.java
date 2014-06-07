@@ -1,8 +1,12 @@
 package dip.modules.writers;
 
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.TimeUnit;
 
-public abstract class AbstractWriter<OUTPUT> implements Runnable, Writer {
+import dip.modules.AbstractModule;
+import dip.modules.RunState;
+
+public abstract class AbstractWriter<OUTPUT> extends AbstractModule implements Writer {
 	protected BlockingQueue<OUTPUT> q;
 
 	public AbstractWriter(BlockingQueue<OUTPUT> q) {
@@ -13,12 +17,21 @@ public abstract class AbstractWriter<OUTPUT> implements Runnable, Writer {
 
 	@Override
 	public void run() {
-		while (true) {
-			try {
-				write(q.take());
-			} catch (Exception e) {
-				e.printStackTrace();
+		try {
+			while (runState != RunState.STOP) {
+				OUTPUT out = q.poll(1, TimeUnit.SECONDS);
+
+				if (out == null) {
+					if (runState == RunState.FINISH)
+						break;
+					else
+						continue;
+				}
+
+				write(out);
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 

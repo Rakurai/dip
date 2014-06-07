@@ -1,10 +1,13 @@
 package dip.modules.converters;
 
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.TimeUnit;
 
+import dip.modules.AbstractModule;
 import dip.modules.Module;
+import dip.modules.RunState;
 
-public abstract class AbstractConverter<INPUT, OUTPUT> implements Module {
+public abstract class AbstractConverter<INPUT, OUTPUT> extends AbstractModule implements Converter {
 	private BlockingQueue<INPUT> input;
 	private BlockingQueue<OUTPUT> output;
 
@@ -17,14 +20,22 @@ public abstract class AbstractConverter<INPUT, OUTPUT> implements Module {
 	
 	@Override
 	public void run() {
-		while (true) {
-			try {
-				INPUT in = input.take();
+		try {
+			while (runState != RunState.STOP) {
+				INPUT in = input.poll(1, TimeUnit.SECONDS);
+				
+				if (in == null) {
+					if (runState == RunState.FINISH)
+						break;
+					else
+						continue;
+				}
+
 				OUTPUT out = convert(in);
 				output.put(out);
-			} catch (Exception e) {
-				e.printStackTrace();
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 

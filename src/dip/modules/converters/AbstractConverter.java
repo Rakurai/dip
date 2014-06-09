@@ -20,10 +20,11 @@ public abstract class AbstractConverter<INPUT, OUTPUT> extends AbstractModule im
 	
 	@Override
 	public void run() {
+		System.out.println("running converter");
 		try {
 			while (runState != RunState.STOP) {
 				INPUT in = input.poll(1, TimeUnit.SECONDS);
-				
+
 				if (in == null) {
 					if (runState == RunState.FINISH)
 						break;
@@ -31,6 +32,7 @@ public abstract class AbstractConverter<INPUT, OUTPUT> extends AbstractModule im
 						continue;
 				}
 
+				System.out.println("got something to convert");
 				OUTPUT out = convert(in);
 				output.put(out);
 			}

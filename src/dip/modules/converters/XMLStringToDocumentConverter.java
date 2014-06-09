@@ -12,7 +12,7 @@ import org.xml.sax.InputSource;
 public class XMLStringToDocumentConverter extends AbstractConverter<String, Document> {
 	private DocumentBuilder builder;
 
-	protected XMLStringToDocumentConverter(BlockingQueue<String> input, BlockingQueue<Document> output) throws Exception {
+	public XMLStringToDocumentConverter(BlockingQueue<String> input, BlockingQueue<Document> output) throws Exception {
 		super(input, output);
 
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();

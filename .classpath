@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="jars/commons-lang3-3.3.2.jar"/>
 	<classpathentry kind="lib" path="jars/twitter4j-async-4.0.1.jar"/>
 	<classpathentry kind="lib" path="jars/twitter4j-core-4.0.1.jar"/>
@@ -11,5 +10,6 @@
 	<classpathentry kind="lib" path="jars/mongo-2.10.1.jar"/>
 	<classpathentry kind="lib" path="jars/hbc-core-2.1.1-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="jars/hbc-twitter4j-2.1.1-SNAPSHOT.jar"/>
+	<classpathentry kind="var" path="JRE_LIB" sourcepath="JRE_SRC"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

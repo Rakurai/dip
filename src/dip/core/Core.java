@@ -3,6 +3,7 @@ package dip.core;
 import java.util.ArrayList;
 import java.util.List;
 
+import dip.modules.converters.AbstractConverter;
 import dip.modules.converters.Converter;
 import dip.modules.readers.Reader;
 import dip.modules.writers.Writer;
@@ -36,26 +37,28 @@ public class Core {
 		List<Thread> writerThreads = new ArrayList<Thread>();
 
 		// start all threads
+		System.out.println(readers.size() + " " + converters.size() + " " + writers.size());
 
 		for (Module module: readers) {
 			module.setRunState(RunState.RUN);
 			Thread thread = new Thread(module);
 			readerThreads.add(thread);
-			thread.run();
+			thread.start();
 		}
 
-		for (Module module: converters) {
+		for (Converter module: converters) {
+			System.out.println("starting converter thread");
 			module.setRunState(RunState.RUN);
 			Thread thread = new Thread(module);
 			converterThreads.add(thread);
-			thread.run();
+			thread.start();
 		}
 
 		for (Module module: writers) {
 			module.setRunState(RunState.RUN);
 			Thread thread = new Thread(module);
 			writerThreads.add(thread);
-			thread.run();
+			thread.start();
 		}
 
 		// wait for the readers to finish (if they're not indefinite)

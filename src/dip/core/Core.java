@@ -28,7 +28,6 @@ public class Core {
 	}
 	
 	public void start() throws Exception {
-
 		if (readers.size() < 1 || writers.size() < 1)
 			throw new Exception("Must have at least one reader and one writer.");
 		
@@ -37,17 +36,14 @@ public class Core {
 		List<Thread> writerThreads = new ArrayList<Thread>();
 
 		// start all threads
-		System.out.println(readers.size() + " " + converters.size() + " " + writers.size());
 
 		for (Module module: readers) {
-			module.setRunState(RunState.RUN);
 			Thread thread = new Thread(module);
 			readerThreads.add(thread);
 			thread.start();
 		}
 
 		for (Converter module: converters) {
-			System.out.println("starting converter thread");
 			module.setRunState(RunState.RUN);
 			Thread thread = new Thread(module);
 			converterThreads.add(thread);

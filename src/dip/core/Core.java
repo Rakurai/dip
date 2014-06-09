@@ -11,9 +11,9 @@ import dip.modules.Module;
 import dip.modules.RunState;
 
 public class Core {
-	List<Reader> readers = new ArrayList<Reader>();
-	List<Converter> converters = new ArrayList<Converter>();
-	List<Writer> writers = new ArrayList<Writer>();
+	List<Module> readers = new ArrayList<Module>();
+	List<Module> converters = new ArrayList<Module>();
+	List<Module> writers = new ArrayList<Module>();
 	
 	public void addReader(Reader reader) {
 		readers.add(reader);
@@ -25,6 +25,10 @@ public class Core {
 
 	public void addWriter(Writer writer) {
 		writers.add(writer);
+	}
+	
+	public void addManager(Module manager) {
+		writers.add(manager);
 	}
 	
 	public void start() throws Exception {
@@ -43,7 +47,7 @@ public class Core {
 			thread.start();
 		}
 
-		for (Converter module: converters) {
+		for (Module module: converters) {
 			module.setRunState(RunState.RUN);
 			Thread thread = new Thread(module);
 			converterThreads.add(thread);

@@ -25,12 +25,12 @@ public class Twitter2Mongo {
 		try {
 			core.addReader(new TwitterReader(inputQueue));
 
+			core.addConverter(new JSONStringtoMongoDBObjectConverter(inputQueue, outputQueue));
+			
 			MongoWriter writer = new MongoWriter(outputQueue);
 			writer.init("thecave.cs.clemson.edu", 27017, "twitter", "feed");
 			core.addWriter(writer);
 
-			core.addConverter(new JSONStringtoMongoDBObjectConverter(inputQueue, outputQueue));
-			
 			core.start();
 		} catch (Exception e) {
 			e.printStackTrace();

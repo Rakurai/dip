@@ -42,6 +42,7 @@ public class Core {
 		// start all threads
 
 		for (Module module: readers) {
+			module.setRunState(RunState.RUN);
 			Thread thread = new Thread(module);
 			readerThreads.add(thread);
 			thread.start();

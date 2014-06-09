@@ -8,8 +8,8 @@ import dip.modules.Module;
 import dip.modules.RunState;
 
 public abstract class AbstractConverter<INPUT, OUTPUT> extends AbstractModule implements Converter {
-	private BlockingQueue<INPUT> input;
-	private BlockingQueue<OUTPUT> output;
+	protected BlockingQueue<INPUT> input;
+	protected BlockingQueue<OUTPUT> output;
 
 	protected AbstractConverter(BlockingQueue<INPUT> input, BlockingQueue<OUTPUT> output) {
 		this.input = input;

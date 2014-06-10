@@ -29,8 +29,6 @@ public class Twitter2Mongo {
 			writer.init("thecave.cs.clemson.edu", 27017, "twitter", "feed");
 			core.addWriter(writer);
 
-			core.addConverter(new JSONStringtoMongoDBObjectConverter(inputQueue, outputQueue));
-			
 			core.start();
 		} catch (Exception e) {
 			e.printStackTrace();

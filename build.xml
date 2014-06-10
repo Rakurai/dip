@@ -5,7 +5,7 @@
               directory with the processing instruction <?eclipse.ant.import?>
               as the first entry and export the buildfile again. --><project basedir="." default="build" name="dip">
     <property environment="env"/>
-    <property name="JRE_LIB" value="../../../../Library/Java/JavaVirtualMachines/jdk1.8.0.jdk/Contents/Home/jre/lib/rt.jar"/>
+    <property name="fasta.location" value="../fasta"/>
     <property name="ECLIPSE_HOME" value="../../../../Applications/eclipse"/>
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.7"/>
@@ -21,18 +21,7 @@
         <pathelement location="jars/mongo-2.10.1.jar"/>
         <pathelement location="jars/hbc-core-2.1.1-SNAPSHOT.jar"/>
         <pathelement location="jars/hbc-twitter4j-2.1.1-SNAPSHOT.jar"/>
-        <pathelement location="${JRE_LIB}"/>
     </path>
-    <path id="run.Twitter2File.classpath">
-        <pathelement location="${JRE_LIB}"/>
-        <path refid="dip.classpath"/>
-    </path>
-    <path id="run.Twitter2File.bootclasspath"/>
-    <path id="run.Twitter2Mongo.classpath">
-        <pathelement location="${JRE_LIB}"/>
-        <path refid="dip.classpath"/>
-    </path>
-    <path id="run.Twitter2Mongo.bootclasspath"/>
     <target name="init">
         <mkdir dir="bin"/>
         <copy includeemptydirs="false" todir="bin">
@@ -56,7 +45,14 @@
             <classpath refid="dip.classpath"/>
         </javac>
     </target>
-    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects">
+        <ant antfile="build.xml" dir="${fasta.location}" inheritAll="false" target="clean"/>
+        <ant antfile="build.xml" dir="${fasta.location}" inheritAll="false" target="build">
+            <propertyset>
+                <propertyref name="build.compiler"/>
+            </propertyset>
+        </ant>
+    </target>
     <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
         <copy todir="${ant.library.dir}">
             <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
@@ -73,18 +69,12 @@
     <target name="Twitter2File">
         <java classname="dip.Twitter2File" failonerror="true" fork="yes">
             <arg line="output"/>
-            <classpath refid="run.Twitter2File.classpath"/>
-            <bootclasspath>
-                <path refid="run.Twitter2File.bootclasspath"/>
-            </bootclasspath>
+            <classpath refid="dip.classpath"/>
         </java>
     </target>
     <target name="Twitter2Mongo">
         <java classname="dip.Twitter2Mongo" failonerror="true" fork="yes">
-            <classpath refid="run.Twitter2Mongo.classpath"/>
-            <bootclasspath>
-                <path refid="run.Twitter2Mongo.bootclasspath"/>
-            </bootclasspath>
+            <classpath refid="dip.classpath"/>
         </java>
     </target>
 </project>

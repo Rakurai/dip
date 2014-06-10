@@ -10,6 +10,14 @@
 	<classpathentry kind="lib" path="jars/mongo-2.10.1.jar"/>
 	<classpathentry kind="lib" path="jars/hbc-core-2.1.1-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="jars/hbc-twitter4j-2.1.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="jars/hbc-dependencies/commons-codec-1.6.jar"/>
+	<classpathentry kind="lib" path="jars/hbc-dependencies/commons-logging-1.1.3.jar"/>
+	<classpathentry kind="lib" path="jars/hbc-dependencies/fluent-hc-4.3.4.jar"/>
+	<classpathentry kind="lib" path="jars/hbc-dependencies/guava-17.0.jar"/>
+	<classpathentry kind="lib" path="jars/hbc-dependencies/httpclient-4.3.4.jar"/>
+	<classpathentry kind="lib" path="jars/hbc-dependencies/httpclient-cache-4.3.4.jar"/>
+	<classpathentry kind="lib" path="jars/hbc-dependencies/httpcore-4.3.2.jar"/>
+	<classpathentry kind="lib" path="jars/hbc-dependencies/httpmime-4.3.4.jar"/>
 	<classpathentry kind="var" path="JRE_LIB" sourcepath="JRE_SRC"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

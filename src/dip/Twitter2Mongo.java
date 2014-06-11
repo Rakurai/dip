@@ -12,7 +12,7 @@ import dip.core.Core;
 import dip.modules.writers.mongo.MongoWriter;
 import dip.modules.converters.AbstractConverter;
 import dip.modules.converters.JSONStringtoMongoDBObjectConverter;
-import dip.modules.readers.twitter.TwitterReader;
+import dip.modules.readers.twitter.Twitter4jReader;
 
 public class Twitter2Mongo {
 
@@ -23,7 +23,7 @@ public class Twitter2Mongo {
 		Core core = new Core();
 
 		try {
-			core.addReader(new TwitterReader(inputQueue));
+			core.addReader(new Twitter4jReader(inputQueue));
 
 			MongoWriter writer = new MongoWriter(outputQueue);
 			writer.init("thecave.cs.clemson.edu", 27017, "twitter", "feed");

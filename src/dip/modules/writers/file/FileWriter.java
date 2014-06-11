@@ -10,19 +10,18 @@ import java.util.concurrent.BlockingQueue;
 import dip.modules.writers.AbstractWriter;
 
 public class FileWriter extends AbstractWriter<String> {
-	FileNamer namer;
-	public FileWriter(BlockingQueue<String> q, FileNamer namer) {
+	FileFactory factory;
+	public FileWriter(BlockingQueue<String> q, FileFactory factory) {
 		super(q);
-		this.namer = namer;
+		this.factory = factory;
 	}
 	
 	public void write(String str) throws Exception
 	{
-        String fileName = namer.getName();
         FileOutputStream fos = null;
         OutputStreamWriter osw = null;
         BufferedWriter bw = null;
-        File file = new File(fileName);
+        File file = factory.getFile();
         System.out.println(file.canWrite());
         file.createNewFile();
         try {

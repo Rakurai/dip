@@ -9,21 +9,21 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 
 import dip.modules.writers.AbstractWriter;
-import dip.modules.writers.file.FileNamer;
+import dip.modules.writers.file.FileFactory;
 
 public class XMLFileWriter extends AbstractWriter<Document> {
 	private Transformer transformer;
-	private FileNamer namer;
+	private FileFactory factory;
 
-	public XMLFileWriter(BlockingQueue<Document> q, Transformer transformer, FileNamer namer) throws Exception {
+	public XMLFileWriter(BlockingQueue<Document> q, Transformer transformer, FileFactory factory) throws Exception {
 		super(q);
 		this.transformer = transformer;
-		this.namer = namer;
+		this.factory = factory;
 	}
 
 	@Override
 	protected void write(Document doc) throws Exception {
-        transformer.transform(new DOMSource(doc.getDocumentElement()), new StreamResult(namer.getName()));
+        transformer.transform(new DOMSource(doc.getDocumentElement()), new StreamResult(factory.getFile()));
 	}
 
 }

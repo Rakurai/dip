@@ -1,9 +1,9 @@
-package dip.modules.writers.hbase;
+package dip.modules.hbase;
 
 
 import java.util.concurrent.BlockingQueue;
 
-import dip.modules.writers.AbstractWriter;
+import dip.modules.AbstractWriter;
 
 import java.io.*;
 import java.util.*;

@@ -1,4 +1,4 @@
-package dip.modules.writers.file;
+package dip.modules.file;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.concurrent.BlockingQueue;
 
-import dip.modules.writers.AbstractWriter;
+import dip.modules.AbstractWriter;
 
 public class FileWriter extends AbstractWriter<String> {
 	FileFactory factory;

@@ -1,4 +1,4 @@
-package dip.modules.writers.file;
+package dip.modules.file;
 
 import java.io.File;
 

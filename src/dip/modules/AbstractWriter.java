@@ -1,4 +1,4 @@
-package dip.modules.writers;
+package dip.modules;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;

@@ -5,9 +5,9 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 import dip.core.Core;
-import dip.modules.writers.file.FileFactory;
-import dip.modules.writers.file.FileWriter;
-import dip.modules.readers.twitter.TwitterReader;
+import dip.modules.file.FileFactory;
+import dip.modules.file.FileWriter;
+import dip.modules.twitter.TwitterReader;
 
 import org.apache.commons.lang3.RandomStringUtils;
 

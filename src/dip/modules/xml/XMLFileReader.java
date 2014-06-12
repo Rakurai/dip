@@ -1,4 +1,4 @@
-package dip.modules.readers.xml;
+package dip.modules.xml;
 
 import java.io.File;
 import java.util.concurrent.BlockingQueue;
@@ -8,8 +8,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
 
-import dip.modules.readers.AbstractReader;
-import dip.modules.writers.file.FileFactory;
+import dip.modules.AbstractReader;
+import dip.modules.file.FileFactory;
 
 public class XMLFileReader extends AbstractReader<Document> {
 

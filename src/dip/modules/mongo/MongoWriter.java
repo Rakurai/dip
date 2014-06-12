@@ -1,8 +1,8 @@
-package dip.modules.writers.mongo;
+package dip.modules.mongo;
 
 import java.util.concurrent.BlockingQueue;
 
-import dip.modules.writers.AbstractWriter;
+import dip.modules.AbstractWriter;
 
 import com.mongodb.DB;
 import com.mongodb.DBCollection;

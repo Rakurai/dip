@@ -1,4 +1,4 @@
-package dip.modules.writers.xmlfile;
+package dip.modules.xml;
 
 import java.util.concurrent.BlockingQueue;
 
@@ -8,8 +8,8 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 
-import dip.modules.writers.AbstractWriter;
-import dip.modules.writers.file.FileFactory;
+import dip.modules.file.FileFactory;
+import dip.modules.AbstractWriter;
 
 public class XMLFileWriter extends AbstractWriter<Document> {
 	private Transformer transformer;

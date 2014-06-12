@@ -1,4 +1,4 @@
-package dip.modules.readers.twitter;
+package dip.modules.twitter;
 
 import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
@@ -15,7 +15,7 @@ import com.twitter.hbc.httpclient.auth.Authentication;
 import com.twitter.hbc.httpclient.auth.OAuth1;
 import com.twitter.hbc.twitter4j.Twitter4jStatusClient;
 
-import dip.modules.readers.AbstractReader;
+import dip.modules.AbstractReader;
 import twitter4j.StallWarning;
 import twitter4j.Status;
 import twitter4j.StatusDeletionNotice;

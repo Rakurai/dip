@@ -14,5 +14,7 @@
 	<classpathentry kind="lib" path="jars/hbase-dependencies/hbase-client-0.98.0-hadoop2.jar"/>
 	<classpathentry kind="lib" path="jars/hbase-dependencies/hbase-common-0.98.0-hadoop2.jar"/>
 	<classpathentry kind="lib" path="jars/hbase-dependencies/hadoop-common-2.2.0.jar"/>
+	<classpathentry kind="lib" path="jars/cassandra-dependencies/cassandra-driver-core-2.0.2.jar"/>
+	<classpathentry kind="lib" path="jars/cassandra-dependencies/cassandra-driver-dse-2.0.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

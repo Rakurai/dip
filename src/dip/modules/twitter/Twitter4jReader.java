@@ -1,7 +1,7 @@
-package dip.modules.readers.twitter;
+package dip.modules.twitter;
 
 import java.util.concurrent.BlockingQueue;
-import dip.modules.readers.AbstractReader;
+import dip.modules.AbstractReader;
 import twitter4j.StallWarning;
 import twitter4j.Status;
 import twitter4j.StatusDeletionNotice;

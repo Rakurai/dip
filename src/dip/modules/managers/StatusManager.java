@@ -8,7 +8,7 @@ import dip.modules.AbstractModule;
 import dip.modules.Module;
 import dip.modules.RunState;
 
-public class StatusManager extends AbstractModule {
+public class StatusManager extends AbstractModule implements Manager {
 	List<BlockingQueue<?>> queues = new ArrayList<BlockingQueue<?>>();
 
 	public void addQueue(BlockingQueue<?> queue) {

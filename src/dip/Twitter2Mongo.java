@@ -9,10 +9,10 @@ import com.mongodb.DBObject;
 
 import json.JSONObject;
 import dip.core.Core;
-import dip.modules.writers.mongo.MongoWriter;
+import dip.modules.mongo.MongoWriter;
 import dip.modules.converters.AbstractConverter;
 import dip.modules.converters.JSONStringtoMongoDBObjectConverter;
-import dip.modules.readers.twitter.Twitter4jReader;
+import dip.modules.twitter.Twitter4jReader;
 
 public class Twitter2Mongo {
 

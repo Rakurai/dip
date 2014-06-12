@@ -1,4 +1,4 @@
-package dip.modules.readers;
+package dip.modules;
 
 import java.util.concurrent.BlockingQueue;
 
@@ -17,8 +17,12 @@ public abstract class AbstractReader<INPUT> extends AbstractModule implements Re
 	@Override
 	public void run() {
 		try {
-			while (runState == RunState.RUN)
-				q.put(read());
+			while (runState == RunState.RUN) {
+				INPUT obj = read();
+				if (obj == null)
+					break;
+				q.put(obj);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

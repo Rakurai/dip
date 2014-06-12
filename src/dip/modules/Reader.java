@@ -1,4 +1,4 @@
-package dip.modules.readers;
+package dip.modules;
 
 import dip.modules.Module;
 

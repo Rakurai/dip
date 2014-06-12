@@ -1,4 +1,4 @@
-package dip.modules.writers;
+package dip.modules;
 
 import dip.modules.Module;
 

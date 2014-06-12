@@ -21,6 +21,9 @@
         <pathelement location="jars/mongo-2.10.1.jar"/>
         <pathelement location="jars/hbc-core-2.1.1-SNAPSHOT.jar"/>
         <pathelement location="jars/hbc-twitter4j-2.1.1-SNAPSHOT.jar"/>
+        <pathelement location="jars/hbase-dependencies/hadoop-common-2.2.0jar"/>
+        <pathelement location="jars/hbase-dependencies/hbase-client-0.98.0-hadoop2.jar"/>
+        <pathelement location="jars/hbase-dependencies/hbase-common-0.98.0-hadoop2.jar"/>
         <pathelement location="${JRE_LIB}"/>
     </path>
     <path id="run.Twitter2File.classpath">

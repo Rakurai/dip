@@ -1,9 +1,11 @@
-package dip.modules.converters;
+package dip.modules.converters.mongo;
 
 import java.util.concurrent.BlockingQueue;
 
 import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
+
+import dip.modules.converters.AbstractConverter;
 
 public class JSONStringtoMongoDBObjectConverter extends AbstractConverter<String, DBObject> {
 

@@ -7,11 +7,9 @@ import org.bson.BSONObject;
 
 import com.mongodb.DBObject;
 
-import json.JSONObject;
 import dip.core.Core;
 import dip.modules.mongo.MongoWriter;
-import dip.modules.converters.AbstractConverter;
-import dip.modules.converters.JSONStringtoMongoDBObjectConverter;
+import dip.modules.converters.mongo.JSONStringtoMongoDBObjectConverter;
 import dip.modules.twitter.Twitter4jReader;
 
 public class Twitter2Mongo {
@@ -24,6 +22,8 @@ public class Twitter2Mongo {
 
 		try {
 			core.addReader(new Twitter4jReader(inputQueue));
+			
+			core.addConverter(new JSONStringtoMongoDBObjectConverter(inputQueue, outputQueue));
 
 			MongoWriter writer = new MongoWriter(outputQueue);
 			writer.init("thecave.cs.clemson.edu", 27017, "twitter", "feed");

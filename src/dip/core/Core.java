@@ -10,6 +10,9 @@ import dip.modules.Writer;
 import dip.modules.Module;
 
 public class Core {
+	private CoreWorker worker = null;
+	private Thread workerThread = null;
+	
 	List<Module> readers = new ArrayList<Module>();
 	List<Module> converters = new ArrayList<Module>();
 	List<Module> writers = new ArrayList<Module>();
@@ -31,68 +34,18 @@ public class Core {
 	}
 
 	public void start() throws Exception {
-		if (readers.size() < 1 || writers.size() < 1)
+		startAsync();
+		workerThread.join();
+	}
+	
+	public void startAsync() throws Exception {
+		if (readers.size() < 1 || writers.size() < 1) {
 			throw new Exception("Must have at least one reader and one writer.");
-		
-		List<Thread> readerThreads = new ArrayList<Thread>();
-		List<Thread> converterThreads = new ArrayList<Thread>();
-		List<Thread> writerThreads = new ArrayList<Thread>();
-
-		// start all threads
-
-		for (Module module: readers) {
-			module.setRunState(RunState.RUN);
-			Thread thread = new Thread(module);
-			readerThreads.add(thread);
-			thread.start();
 		}
-
-		for (Module module: converters) {
-			module.setRunState(RunState.RUN);
-			Thread thread = new Thread(module);
-			converterThreads.add(thread);
-			thread.start();
-		}
-
-		for (Module module: writers) {
-			module.setRunState(RunState.RUN);
-			Thread thread = new Thread(module);
-			writerThreads.add(thread);
-			thread.start();
-		}
-
-		// wait for the readers to finish (if they're not indefinite)
-
-		for (Thread thread: readerThreads)
-			thread.join();
-
-		// signal the converters to finish up their queue
 		
-		for (Module module: converters)
-			module.setRunState(RunState.FINISH);
+		worker = new CoreWorker(readers, converters, writers);
 
-		// wait for the converters to finish
-		
-		for (Thread thread: converterThreads)
-			thread.join();
-
-		// signal the writers to finish their queue
-		
-		for (Module module: writers)
-			module.setRunState(RunState.FINISH);
-
-		// wait for the writers to finish
-
-		for (Thread thread: writerThreads)
-			thread.join();
-
-		// clean up all modules
-
-		for (Module module: readers)
-			module.cleanup();
-		for (Module module: converters)
-			module.cleanup();
-		for (Module module: writers)
-			module.cleanup();
+		workerThread = new Thread(worker);
+		workerThread.run();
 	}
 }

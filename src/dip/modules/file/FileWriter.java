@@ -7,21 +7,20 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.concurrent.BlockingQueue;
 
-import dip.modules.AbstractWriter;
+import dip.modules.AbstractMultiWriter;
+import dip.modules.IOMapper;
 
-public class FileWriter extends AbstractWriter<String> {
-	FileFactory factory;
-	public FileWriter(BlockingQueue<String> q, FileFactory factory) {
-		super(q);
-		this.factory = factory;
+public class FileWriter extends AbstractMultiWriter<String, File> {
+
+	public FileWriter(BlockingQueue<String> queue, IOMapper<File> mapper) {
+		super(queue, mapper);
 	}
 	
-	public void write(String str) throws Exception
+	public void write(String str, File file) throws Exception
 	{
         FileOutputStream fos = null;
         OutputStreamWriter osw = null;
         BufferedWriter bw = null;
-        File file = factory.getFile();
         System.out.println(file.canWrite());
         file.createNewFile();
         try {

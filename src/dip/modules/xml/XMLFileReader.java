@@ -8,29 +8,20 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
 
-import dip.modules.AbstractReader;
-import dip.modules.file.FileFactory;
+import dip.modules.AbstractMultiReader;
+import dip.modules.IOMapper;
 
-public class XMLFileReader extends AbstractReader<Document> {
-
-	private FileFactory factory;
+public class XMLFileReader extends AbstractMultiReader<File, Document> {
 	private DocumentBuilder builder;
 
-	public XMLFileReader(BlockingQueue<Document> q, FileFactory factory) throws Exception {
-		super(q);
-		this.factory = factory;
+	public XMLFileReader(BlockingQueue<Document> queue, IOMapper<File> mapper) throws Exception {
+		super(queue, mapper);
 		this.builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 	}
 
 	@Override
-	protected Document read() throws Exception {
-		File file = factory.getFile();
-		if (file == null)
-			return null;
-		
-		Document doc = builder.parse(file);
-
-		return doc;
+	protected Document read(File file) throws Exception {
+		return builder.parse(file);
 	}
 
 }

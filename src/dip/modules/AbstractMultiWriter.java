@@ -6,14 +6,16 @@ import java.util.concurrent.TimeUnit;
 import dip.modules.AbstractModule;
 import dip.core.RunState;
 
-public abstract class AbstractWriter<INPUT> extends AbstractModule implements Writer {
+public abstract class AbstractMultiWriter<INPUT, OUTPUT> extends AbstractModule implements Writer {
 	protected BlockingQueue<INPUT> queue;
+	protected IOMapper<OUTPUT> outputMapper = null;
 
-	public AbstractWriter(BlockingQueue<INPUT> queue) {
+	public AbstractMultiWriter(BlockingQueue<INPUT> queue, IOMapper<OUTPUT> mapper) {
 		this.queue = queue;
+		outputMapper = mapper;
 	}
 
-	protected abstract void write(INPUT obj) throws Exception;
+	protected abstract void write(INPUT obj, OUTPUT outvector) throws Exception;
 
 	@Override
 	public void run() {
@@ -28,7 +30,7 @@ public abstract class AbstractWriter<INPUT> extends AbstractModule implements Wr
 						continue;
 				}
 
-				write(obj);
+				write(obj, outputMapper.get());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -5,8 +5,7 @@ import java.util.List;
 import java.util.concurrent.BlockingQueue;
 
 import dip.modules.AbstractModule;
-import dip.modules.Module;
-import dip.modules.RunState;
+import dip.core.RunState;
 
 public class StatusManager extends AbstractModule implements Manager {
 	List<BlockingQueue<?>> queues = new ArrayList<BlockingQueue<?>>();

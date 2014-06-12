@@ -1,14 +1,15 @@
-package dip.modules.converters;
+package dip.modules.converters.xml;
 
 import java.io.StringWriter;
 import java.util.concurrent.BlockingQueue;
 
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
+
+import dip.modules.converters.AbstractConverter;
 
 public class XMLDocumentToStringConverter extends AbstractConverter<Document, String> {
 

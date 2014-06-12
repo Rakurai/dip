@@ -3,7 +3,7 @@ package dip.modules;
 import java.util.concurrent.BlockingQueue;
 
 import dip.modules.AbstractModule;
-import dip.modules.RunState;
+import dip.core.RunState;
 
 public abstract class AbstractReader<INPUT> extends AbstractModule implements Reader {
 	protected BlockingQueue<INPUT> q;

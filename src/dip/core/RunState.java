@@ -1,4 +1,4 @@
-package dip.modules;
+package dip.core;
 
 public enum RunState {
 	RUN,

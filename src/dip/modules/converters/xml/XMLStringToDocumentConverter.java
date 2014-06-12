@@ -1,4 +1,4 @@
-package dip.modules.converters;
+package dip.modules.converters.xml;
 
 import java.io.StringReader;
 import java.util.concurrent.BlockingQueue;
@@ -8,6 +8,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
+
+import dip.modules.converters.AbstractConverter;
 
 public class XMLStringToDocumentConverter extends AbstractConverter<String, Document> {
 	private DocumentBuilder builder;

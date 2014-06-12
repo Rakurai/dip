@@ -4,8 +4,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 import dip.modules.AbstractModule;
-import dip.modules.Module;
-import dip.modules.RunState;
+import dip.core.RunState;
 
 public abstract class AbstractConverter<INPUT, OUTPUT> extends AbstractModule implements Converter {
 	private BlockingQueue<INPUT> input;

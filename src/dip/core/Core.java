@@ -8,7 +8,6 @@ import dip.modules.managers.Manager;
 import dip.modules.Reader;
 import dip.modules.Writer;
 import dip.modules.Module;
-import dip.modules.RunState;
 
 public class Core {
 	List<Module> readers = new ArrayList<Module>();

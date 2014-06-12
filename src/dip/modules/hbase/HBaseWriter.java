@@ -5,16 +5,14 @@ import java.util.concurrent.BlockingQueue;
 
 import dip.modules.AbstractWriter;
 
-import java.io.*;
-import java.util.*;
-
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.hbase.client.*;
-import org.apache.hadoop.hbase.util.*;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.HColumnDescriptor;
 import org.apache.hadoop.hbase.HTableDescriptor; 
 import org.apache.hadoop.hbase.TableName;
+import org.apache.hadoop.hbase.client.HBaseAdmin;
+import org.apache.hadoop.hbase.client.HTable;
+import org.apache.hadoop.hbase.client.Put;
 
 public class HBaseWriter extends AbstractWriter<Put> {
 	private static Configuration conf = null;

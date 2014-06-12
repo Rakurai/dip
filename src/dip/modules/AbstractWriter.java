@@ -4,7 +4,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 import dip.modules.AbstractModule;
-import dip.modules.RunState;
+import dip.core.RunState;
 
 public abstract class AbstractWriter<OUTPUT> extends AbstractModule implements Writer {
 	protected BlockingQueue<OUTPUT> q;

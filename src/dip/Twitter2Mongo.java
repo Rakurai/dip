@@ -6,6 +6,7 @@ import java.util.concurrent.BlockingQueue;
 import com.mongodb.DBObject;
 
 import dip.core.Core;
+import dip.modules.mongo.MongoCollectionFactory;
 import dip.modules.mongo.MongoWriter;
 import dip.modules.converters.mongo.JSONStringtoMongoDBObjectConverter;
 import dip.modules.twitter.Twitter4jReader;
@@ -23,11 +24,12 @@ public class Twitter2Mongo {
 			
 			core.addConverter(new JSONStringtoMongoDBObjectConverter(inputQueue, outputQueue));
 
-			MongoWriter writer = new MongoWriter(outputQueue);
-			writer.init("thecave.cs.clemson.edu", 27017, "twitter", "feed");
-			core.addWriter(writer);
+			MongoCollectionFactory factory = new MongoCollectionFactory("thecave.cs.clemson.edu", 27017);
+			core.addWriter(new MongoWriter(outputQueue, factory.getCollection("twitter", "feed")));
 
 			core.start();
+
+			factory.cleanup();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

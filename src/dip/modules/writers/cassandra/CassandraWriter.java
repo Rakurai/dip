@@ -5,48 +5,33 @@ import java.util.concurrent.BlockingQueue;
 
 import dip.modules.AbstractWriter;
 
-import java.io.*;
-import java.util.*;
+import com.datastax.driver.core.Cluster;
+import com.datastax.driver.core.Metadata;
+import com.datastax.driver.core.Session;
+import com.datastax.driver.core.Statement;
 
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.hbase.client.*;
-import org.apache.hadoop.hbase.util.*;
-import org.apache.hadoop.hbase.HBaseConfiguration;
-import org.apache.hadoop.hbase.HColumnDescriptor;
-import org.apache.hadoop.hbase.HTableDescriptor; 
-import org.apache.hadoop.hbase.TableName;
-
-public class CassandraWriter extends AbstractWriter<Put> {
+public class CassandraWriter extends AbstractWriter<Statement> {
 	private static Cluster cluster = null;
-	private HBaseAdmin hbase;
-	private HTable table;
+	private Session session;
 	
-	public CassandraWriter(BlockingQueue<Put> q) {
+	public CassandraWriter(BlockingQueue<Statement> q) {
 		super(q);
 	}
 	
-	public synchronized void init(String hbaseSitePath, String host, int port, String table_name) throws Exception {
-		if (conf == null) {
-			this.conf = HBaseConfiguration.create();
-			conf.addResource(hbaseSitePath);
-			conf.set("hbase.master", host + ":" + port);
+	public synchronized void init(String node, String host, int port, String table_name) throws Exception {
+		if (cluster == null) {
+			this.cluster = Cluster.builder().addContactPoint(node).build();
+			Metadata metadata = cluster.getMetadata();
+			System.out.printf("Connected to cluster: %s\n", metadata.getClusterName());
 		}
-		hbase = new HBaseAdmin(conf);
-		
-		if (!hbase.tableExists(table_name)){
-			HTableDescriptor new_table = new HTableDescriptor(TableName.valueOf("table_name"));
-			new_table.addFamily(new HColumnDescriptor("content"));
-			hbase.createTable(new_table);
-		}
-		
-		table = new HTable(conf, table_name);
+		session = cluster.connect();
 	}
 
 	@Override
-	public void write(Put obj) {
+	public void write(Statement obj) {
 		while (true) {
 			try {
-				table.put(obj);
+				session.execute(obj);
 			}
 			catch (Exception e){
 				e.printStackTrace();
@@ -57,14 +42,8 @@ public class CassandraWriter extends AbstractWriter<Put> {
 	@Override
 	public synchronized void cleanup() {
 		super.cleanup();
-		if (conf != null) {
-			try {
-				hbase.close();
-				conf.clear();
-			}
-			catch (Exception e){
-				e.printStackTrace();
-			}
+		if (cluster != null) {
+			cluster.close();
 		}
 	}
 }

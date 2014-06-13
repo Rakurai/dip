@@ -21,6 +21,8 @@ public abstract class AbstractReader<OUTPUT> extends AbstractModule implements R
 				OUTPUT obj = read();
 				if (obj == null)
 					break;
+				
+				core.register(obj);
 				q.put(obj);
 			}
 		} catch (Exception e) {

@@ -28,6 +28,7 @@ public abstract class AbstractWriter<INPUT> extends AbstractModule implements Wr
 						continue;
 				}
 
+				core.deregister(obj);
 				write(obj);
 			}
 		} catch (Exception e) {

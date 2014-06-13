@@ -23,6 +23,7 @@ public abstract class AbstractMultiReader<INPUT, OUTPUT> extends AbstractModule 
 				OUTPUT obj = read(mapper.get());
 				if (obj == null)
 					break;
+				core.register(obj);
 				queue.put(obj);
 			}
 		} catch (Exception e) {

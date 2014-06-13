@@ -1,7 +1,9 @@
 package dip.core;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import dip.modules.converters.Converter;
 import dip.modules.managers.Manager;
@@ -13,24 +15,51 @@ public class Core {
 	private CoreWorker worker = null;
 	private Thread workerThread = null;
 	
+	private Map<Object, Metadata> registry = new HashMap<Object, Metadata>();
+	
 	List<Module> readers = new ArrayList<Module>();
 	List<Module> converters = new ArrayList<Module>();
 	List<Module> writers = new ArrayList<Module>();
 	
-	public void addReader(Reader reader) {
-		readers.add(reader);
+	public void addModule(Module module) {
+		module.setCore(this);
+	}
+	
+	public void addReader(Reader module) {
+		addModule(module);
+		readers.add(module);
 	}
 
-	public void addConverter(Converter converter) {
-		converters.add(converter);
+	public void addConverter(Converter module) {
+		addModule(module);
+		converters.add(module);
 	}
 
-	public void addWriter(Writer writer) {
-		writers.add(writer);
+	public void addWriter(Writer module) {
+		addModule(module);
+		writers.add(module);
 	}
 
-	public void addManager(Manager manager) {
-		writers.add(manager);
+	public void addManager(Manager module) {
+		addModule(module);
+		writers.add(module);
+	}
+
+	public void register(Object obj) {
+		registry.put(obj, new Metadata());
+	}
+	
+	public void reregister(Object old_obj, Object new_obj) {
+		Metadata m = registry.remove(old_obj);
+		registry.put(new_obj, m);
+	}
+	
+	public void deregister(Object obj) {
+		registry.remove(obj);
+	}
+	
+	protected Metadata getRegistry(Object obj) {
+		return registry.get(obj);
 	}
 
 	public void start() throws Exception {

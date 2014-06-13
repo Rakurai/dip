@@ -5,20 +5,20 @@ import java.util.concurrent.BlockingQueue;
 import dip.modules.AbstractModule;
 import dip.core.RunState;
 
-public abstract class AbstractReader<INPUT> extends AbstractModule implements Reader {
-	protected BlockingQueue<INPUT> q;
+public abstract class AbstractReader<OUTPUT> extends AbstractModule implements Reader {
+	protected BlockingQueue<OUTPUT> q;
 
-	public AbstractReader(BlockingQueue<INPUT> q) {
+	public AbstractReader(BlockingQueue<OUTPUT> q) {
 		this.q = q;
 	}
 
-	protected abstract INPUT read() throws Exception;
+	protected abstract OUTPUT read() throws Exception;
 
 	@Override
 	public void run() {
 		try {
 			while (runState == RunState.RUN) {
-				INPUT obj = read();
+				OUTPUT obj = read();
 				if (obj == null)
 					break;
 				q.put(obj);

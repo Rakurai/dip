@@ -22,7 +22,7 @@ public abstract class AbstractReader<OUTPUT> extends AbstractModule implements R
 				if (obj == null)
 					break;
 				
-				core.register(obj);
+				core.getRegistry().register(obj);
 				q.put(obj);
 			}
 		} catch (Exception e) {

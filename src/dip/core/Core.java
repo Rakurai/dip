@@ -14,8 +14,7 @@ import dip.modules.Module;
 public class Core {
 	private CoreWorker worker = null;
 	private Thread workerThread = null;
-	
-	private Map<Object, Metadata> registry = new HashMap<Object, Metadata>();
+	private Registry registry = new Registry();
 	
 	List<Module> readers = new ArrayList<Module>();
 	List<Module> converters = new ArrayList<Module>();
@@ -45,21 +44,8 @@ public class Core {
 		writers.add(module);
 	}
 
-	public void register(Object obj) {
-		registry.put(obj, new Metadata());
-	}
-	
-	public void reregister(Object old_obj, Object new_obj) {
-		Metadata m = registry.remove(old_obj);
-		registry.put(new_obj, m);
-	}
-	
-	public void deregister(Object obj) {
-		registry.remove(obj);
-	}
-	
-	protected Metadata getRegistry(Object obj) {
-		return registry.get(obj);
+	public Registry getRegistry() {
+		return registry;
 	}
 
 	public void start() throws Exception {

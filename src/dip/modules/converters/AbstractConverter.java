@@ -31,7 +31,7 @@ public abstract class AbstractConverter<INPUT, OUTPUT> extends AbstractModule im
 				}
 
 				OUTPUT out = convert(in);
-				core.reregister(in, out);
+				core.getRegistry().update(in, out);
 				output.put(out);
 			}
 		} catch (Exception e) {

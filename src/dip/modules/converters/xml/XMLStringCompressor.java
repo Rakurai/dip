@@ -1,5 +1,6 @@
 package dip.modules.converters.xml;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.util.concurrent.BlockingQueue;
@@ -22,7 +23,8 @@ public class XMLStringCompressor extends AbstractConverter<String, String> {
 	protected String convert(String str) throws Exception {
 		OutputStream ostream = new ByteArrayOutputStream();
 		transmogrifier.setOutputStream(ostream);
-		transmogrifier.encode(new InputSource(str));
+//		transmogrifier.encode(new InputSource(str));
+		transmogrifier.encode(new InputSource(new ByteArrayInputStream(str.getBytes("utf-8"))));
 		return ostream.toString();
 	}
 

@@ -7,9 +7,13 @@ public class Registry {
 	private ConcurrentMap<Object, Metadata> registry = new ConcurrentHashMap<Object, Metadata>();
 	
 	public void register(Object obj) {
-		registry.put(obj, new Metadata());
+		register(obj, new Metadata());
 	}
-	
+
+	public void register(Object obj, Metadata m) {
+		registry.put(obj, m);
+	}
+
 	public void update(Object old_obj, Object new_obj) {
 		Metadata m = registry.remove(old_obj);
 		registry.put(new_obj, m);

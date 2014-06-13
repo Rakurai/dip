@@ -16,5 +16,6 @@
 	<classpathentry kind="lib" path="jars/hbase-dependencies/hadoop-common-2.2.0.jar"/>
 	<classpathentry kind="lib" path="jars/cassandra-dependencies/cassandra-driver-core-2.0.2.jar"/>
 	<classpathentry kind="lib" path="jars/cassandra-dependencies/cassandra-driver-dse-2.0.2.jar"/>
+	<classpathentry kind="lib" path="jars/nagasena.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

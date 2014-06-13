@@ -1,22 +1,24 @@
 package dip.modules.stream;
 
+import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.util.concurrent.BlockingQueue;
 
 import dip.modules.AbstractWriter;
 
 public class StreamWriter extends AbstractWriter<String> {
 
-	private DataOutputStream stream;
+	private BufferedWriter writer;
 
 	public StreamWriter(BlockingQueue<String> queue, OutputStream stream) {
 		super(queue);
-		this.stream = new DataOutputStream(stream);
+		this.writer = new BufferedWriter(new OutputStreamWriter(stream));
 	}
 
 	@Override
 	protected void write(String str) throws Exception {
-		stream.writeUTF(str);
+		writer.write(str);
 	}
 }

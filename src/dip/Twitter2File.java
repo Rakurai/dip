@@ -6,7 +6,7 @@ import java.util.concurrent.BlockingQueue;
 
 import dip.core.Core;
 import dip.modules.IOMapper;
-import dip.modules.file.FileWriter;
+import dip.modules.file.FileMultiWriter;
 import dip.modules.twitter.TwitterReader;
 
 import org.apache.commons.lang3.RandomStringUtils;
@@ -26,8 +26,8 @@ public class Twitter2File {
 
 		core.addReader(new TwitterReader(queue));
 
-		core.addWriter(new FileWriter(queue, new IOMapper<File>() {
-			public File get() {
+		core.addWriter(new FileMultiWriter(queue, new IOMapper<File>() {
+			public File acquire() {
 				return new File(outpath + "/" + RandomStringUtils.randomAlphabetic(10));
 			}
 		}));

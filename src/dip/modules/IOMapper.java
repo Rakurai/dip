@@ -1,6 +1,6 @@
 package dip.modules;
 
 public abstract class IOMapper<T> {
-	public abstract T get();
-	public void finish(T val) {}
+	public abstract T acquire();
+	public void release(T val) {}
 }

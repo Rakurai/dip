@@ -1,7 +1,7 @@
 package dip.modules.stream;
 
 import java.io.BufferedWriter;
-import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.concurrent.BlockingQueue;
@@ -20,5 +20,14 @@ public class StreamWriter extends AbstractWriter<String> {
 	@Override
 	protected void write(String str) throws Exception {
 		writer.write(str);
+	}
+	
+	@Override
+	public void cleanup() {
+		try {
+			writer.flush(); // stream to be closed outside
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

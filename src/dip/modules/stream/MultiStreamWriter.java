@@ -1,6 +1,5 @@
 package dip.modules.stream;
 
-import java.io.BufferedWriter;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.concurrent.BlockingQueue;
@@ -16,8 +15,10 @@ public class MultiStreamWriter extends AbstractMultiWriter<String, OutputStream>
 
 	@Override
 	protected void write(String str, OutputStream stream) throws Exception {
-		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(stream));
+		// note: do not wrap this in a BufferedWriter, because the stream could be closed
+		// after this call completes (or it might not).  Without a buffer all bytes are
+		// written immediately.
+		OutputStreamWriter writer = new OutputStreamWriter(stream);
 		writer.write(str);
 	}
-
 }

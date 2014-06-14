@@ -6,6 +6,7 @@ import java.util.concurrent.BlockingQueue;
 import com.mongodb.DBObject;
 
 import dip.core.Core;
+import dip.modules.managers.StatusManager;
 import dip.modules.mongo.MongoCollectionFactory;
 import dip.modules.mongo.MongoWriter;
 import dip.modules.converters.mongo.JSONStringtoMongoDBObjectConverter;
@@ -26,10 +27,16 @@ public class Twitter2Mongo {
 
 			MongoCollectionFactory factory = new MongoCollectionFactory("thecave.cs.clemson.edu", 27017);
 			core.addWriter(new MongoWriter(outputQueue, factory.getCollection("twitter", "feed")));
-
+			
+			StatusManager manager = new StatusManager();
+			manager.addQueue(inputQueue);
+			manager.addQueue(outputQueue);
+			
+			core.addManager(manager);
 			core.start();
 
 			factory.cleanup();
+			System.out.println("Stopped.");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

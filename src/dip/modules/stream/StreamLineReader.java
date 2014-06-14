@@ -20,5 +20,4 @@ public class StreamLineReader extends AbstractReader<String> {
 	protected String read() throws Exception {
 		return reader.readLine();
 	}
-
 }

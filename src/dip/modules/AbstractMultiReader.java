@@ -20,9 +20,13 @@ public abstract class AbstractMultiReader<INPUT, OUTPUT> extends AbstractModule 
 	public void run() {
 		try {
 			while (runState == RunState.RUN) {
-				OUTPUT obj = read(mapper.get());
-				if (obj == null)
+				INPUT input = mapper.acquire();
+				OUTPUT obj = read(input);
+				mapper.release(input);
+
+				if (obj != null)
 					break;
+
 				core.getRegistry().register(obj);
 				queue.put(obj);
 			}

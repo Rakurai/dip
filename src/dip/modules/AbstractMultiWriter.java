@@ -31,7 +31,9 @@ public abstract class AbstractMultiWriter<INPUT, OUTPUT> extends AbstractModule 
 				}
 
 				core.getRegistry().deregister(obj);
-				write(obj, outputMapper.get());
+				OUTPUT output = outputMapper.acquire();
+				write(obj, output);
+				outputMapper.release(output);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -1,6 +1,8 @@
 package dip.modules.twitter;
 
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+
 import dip.modules.AbstractReader;
 import twitter4j.StallWarning;
 import twitter4j.Status;
@@ -13,15 +15,11 @@ import twitter4j.TwitterStream;
 //import twitter4j.conf.ConfigurationBuilder;
 import twitter4j.TwitterObjectFactory;
 
-public class Twitter4jReader extends AbstractReader<String> {
+public class Twitter4jReader extends AbstractReader<Object, String> {
+	BlockingQueue<String> queue = new ArrayBlockingQueue<String>(100);
 	
-	public Twitter4jReader(BlockingQueue<String> q) {
-		super(q);
-		// TODO Auto-generated constructor stub
-	}
-	
-	@Override
-    public void run() {
+	public Twitter4jReader() {
+		super();
         TwitterStream twitterStream = new TwitterStreamFactory().getInstance();
         StatusListener listener = new StatusListener() {
             @Override
@@ -30,7 +28,7 @@ public class Twitter4jReader extends AbstractReader<String> {
                 //System.out.println(status.getUser().getName() + " : " + status.getText());
                 String rawjson = TwitterObjectFactory.getRawJSON(status);
                 try {
-                        q.put(rawjson);
+                        queue.put(rawjson);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -64,12 +62,11 @@ public class Twitter4jReader extends AbstractReader<String> {
         };
         twitterStream.addListener(listener);
         twitterStream.sample();
-    }
-
+	}
+	
 	@Override
-	protected String read() {
-		// TODO Auto-generated method stub
-		return null;
+	public String read(Object obj) throws InterruptedException {
+		return queue.take();
 	}
 
 }

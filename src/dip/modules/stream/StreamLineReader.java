@@ -3,21 +3,26 @@ package dip.modules.stream;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.concurrent.BlockingQueue;
 
 import dip.modules.AbstractReader;
+import dip.modules.IOMapper;
 
-public class StreamLineReader extends AbstractReader<String> {
+public class StreamLineReader extends AbstractReader<BufferedReader, String> {
 
-	private BufferedReader reader;
+	public StreamLineReader(InputStream stream) {
+		super(new BufferedReader(new InputStreamReader(stream)));
+	}
 
-	public StreamLineReader(BlockingQueue<String> queue, InputStream stream) {
-		super(queue);
-		this.reader = new BufferedReader(new InputStreamReader(stream));
+	public StreamLineReader(BufferedReader reader) {
+		super(reader);
+	}
+
+	public StreamLineReader(IOMapper<BufferedReader> mapper) {
+		super(mapper);
 	}
 
 	@Override
-	protected String read() throws Exception {
+	public String read(BufferedReader reader) throws Exception {
 		return reader.readLine();
 	}
 }

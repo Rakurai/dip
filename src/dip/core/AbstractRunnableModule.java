@@ -1,9 +1,6 @@
-package dip.modules;
+package dip.core;
 
-import dip.core.Core;
-import dip.core.RunState;
-
-public abstract class AbstractModule implements Module {
+public abstract class AbstractRunnableModule implements RunnableModule {
 	protected RunState runState;
 	protected Core core;
 	

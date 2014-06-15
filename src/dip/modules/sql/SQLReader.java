@@ -5,30 +5,26 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.BlockingQueue;
 
 import dip.modules.AbstractReader;
 
-public class SQLReader extends AbstractReader<Map<String, Object>> {
-
-	private ResultSet resultSet;
+public class SQLReader extends AbstractReader<ResultSet, Map<String, Object>> {
 	ResultSetMetaData metaData;
 
-	public SQLReader(BlockingQueue<Map<String, Object>> queue, ResultSet results) throws SQLException {
-		super(queue);
-		this.resultSet = results;
-		this.metaData = results.getMetaData();
+	public SQLReader(ResultSet rs) throws SQLException {
+		super(rs);
+		this.metaData = rs.getMetaData();
 	}
 
 	@Override
-	protected Map<String, Object> read() throws SQLException {
+	public Map<String, Object> read(ResultSet rs) throws SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();
 
-		if (!resultSet.next())
+		if (!rs.next())
 			return null;
 
 		for (int i = 0; i < metaData.getColumnCount(); i++)
-			map.put(metaData.getColumnName(i), resultSet.getObject(i));
+			map.put(metaData.getColumnName(i), rs.getObject(i));
 
 		return map;
 	}

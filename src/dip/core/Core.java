@@ -1,45 +1,37 @@
 package dip.core;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import dip.modules.converters.Converter;
-import dip.modules.managers.Manager;
-import dip.modules.Reader;
-import dip.modules.Writer;
-import dip.modules.Module;
 
 public class Core {
 	private CoreWorker worker = null;
 	private Thread workerThread = null;
 	private Registry registry = new Registry();
 	
-	List<Module> readers = new ArrayList<Module>();
-	List<Module> converters = new ArrayList<Module>();
-	List<Module> writers = new ArrayList<Module>();
+	List<RunnableModule> readers = new ArrayList<RunnableModule>();
+	List<RunnableModule> converters = new ArrayList<RunnableModule>();
+	List<RunnableModule> writers = new ArrayList<RunnableModule>();
 	
-	public void addModule(Module module) {
+	public void addModule(RunnableModule module) {
 		module.setCore(this);
 	}
-	
-	public void addReader(Reader module) {
+
+	public void addReader(RunnableReader<?, ?> module) {
 		addModule(module);
 		readers.add(module);
 	}
 
-	public void addConverter(Converter module) {
+	public void addConverter(RunnableConverter<?, ?> module) {
 		addModule(module);
 		converters.add(module);
 	}
 
-	public void addWriter(Writer module) {
+	public void addWriter(RunnableWriter<?, ?> module) {
 		addModule(module);
 		writers.add(module);
 	}
 
-	public void addManager(Manager module) {
+	public void addManager(RunnableModule module) {
 		addModule(module);
 		writers.add(module);
 	}

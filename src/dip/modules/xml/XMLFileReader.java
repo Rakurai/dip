@@ -1,26 +1,25 @@
 package dip.modules.xml;
 
 import java.io.File;
-import java.util.concurrent.BlockingQueue;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
 
-import dip.modules.AbstractMultiReader;
+import dip.modules.AbstractReader;
 import dip.modules.IOMapper;
 
-public class XMLFileReader extends AbstractMultiReader<File, Document> {
+public class XMLFileReader extends AbstractReader<File, Document> {
 	private DocumentBuilder builder;
 
-	public XMLFileReader(BlockingQueue<Document> queue, IOMapper<File> mapper) throws Exception {
-		super(queue, mapper);
+	public XMLFileReader(IOMapper<File> mapper) throws Exception {
+		super(mapper);
 		this.builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 	}
 
 	@Override
-	protected Document read(File file) throws Exception {
+	public Document read(File file) throws Exception {
 		return builder.parse(file);
 	}
 

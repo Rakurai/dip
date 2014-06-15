@@ -1,7 +1,6 @@
 package dip.modules.converters.xml;
 
 import java.io.StringReader;
-import java.util.concurrent.BlockingQueue;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -9,20 +8,18 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
-import dip.modules.converters.AbstractConverter;
+import dip.modules.AbstractConverter;
 
 public class XMLStringToDocumentConverter extends AbstractConverter<String, Document> {
 	private DocumentBuilder builder;
 
-	public XMLStringToDocumentConverter(BlockingQueue<String> input, BlockingQueue<Document> output) throws Exception {
-		super(input, output);
-
+	public XMLStringToDocumentConverter() throws Exception {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		builder = factory.newDocumentBuilder();
 	}
 
 	@Override
-	protected Document convert(String str) throws Exception {
+	public Document convert(String str) throws Exception {
         InputSource source = new InputSource(new StringReader(str));
         return builder.parse(source);
 	}

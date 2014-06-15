@@ -6,23 +6,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.concurrent.BlockingQueue;
 
 import dip.modules.AbstractWriter;
 
-public class SQLWriter extends AbstractWriter<Map<String, Object>> {
+public class SQLWriter extends AbstractWriter<Map<String, Object>, Connection> {
 
 	private String table_name;
-	private Connection connection;
 
-	public SQLWriter(BlockingQueue<Map<String, Object>> queue, Connection connection, String table_name) throws SQLException {
-		super(queue);
-		this.connection = connection;
+	public SQLWriter(Connection connection, String table_name) throws SQLException {
+		super(connection);
 		this.table_name = table_name;
 	}
 
 	@Override
-	protected void write(Map<String, Object> map) throws Exception {
+	public void write(Map<String, Object> map, Connection connection) throws Exception {
 		ArrayList<Object> vals = new ArrayList<Object>();
 		StringBuilder keyString = new StringBuilder();
 		StringBuilder valString = new StringBuilder();

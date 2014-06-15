@@ -1,6 +1,7 @@
 package dip.modules.twitter;
 
 import java.util.ArrayList;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -15,6 +16,7 @@ import com.twitter.hbc.httpclient.auth.Authentication;
 import com.twitter.hbc.httpclient.auth.OAuth1;
 import com.twitter.hbc.twitter4j.Twitter4jStatusClient;
 
+import dip.core.RunnableReader;
 import dip.modules.AbstractReader;
 import twitter4j.StallWarning;
 import twitter4j.Status;
@@ -24,17 +26,12 @@ import twitter4j.StatusListener;
 //import twitter4j.conf.ConfigurationBuilder;
 import twitter4j.TwitterObjectFactory;
 
-public class TwitterReader extends AbstractReader<String> {
+public class TwitterReader extends AbstractReader<Object, String> {
+	private BlockingQueue<String> queue = new ArrayBlockingQueue<String>(100);
 	
-	public TwitterReader(BlockingQueue<String> q) {
-		super(q);
-		// TODO Auto-generated constructor stub
-	}
-	
-	@Override
-    public void run() {
-		
-		
+	public TwitterReader() {
+		super(); // initialize the IOMapper to return null
+
 		StatusListener listener = new StatusListener() {
             @Override
             public void onStatus(Status status) {
@@ -42,7 +39,7 @@ public class TwitterReader extends AbstractReader<String> {
                 //System.out.println(status.getUser().getName() + " : " + status.getText());
                 String rawjson = TwitterObjectFactory.getRawJSON(status);
                 try {
-                        q.put(rawjson);
+                        queue.put(rawjson);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -75,7 +72,6 @@ public class TwitterReader extends AbstractReader<String> {
             }
         };
         
-        
      // Create an appropriately sized blocking queue
         BlockingQueue<String> queue = new LinkedBlockingQueue<String>(10000);
 
@@ -93,7 +89,6 @@ public class TwitterReader extends AbstractReader<String> {
         String consumerSecret="zjCdxMKJwjJ19nMuETLqBi3G30tFWvIxrJfYr06zk";
         String token="2319463477-mgOb9OGJDc8GoBYRYK0SgPUinHYhFJCkCMwkMZV";
         String secret="tmvPqp6KTbKRpzkmduiE4hbrITHeWh96jK8dnkUQPk13O";
-        
         
         Authentication auth = new OAuth1(consumerKey, consumerSecret, token, secret);
         // Authentication auth = new BasicAuth(username, password);
@@ -126,9 +121,7 @@ public class TwitterReader extends AbstractReader<String> {
 	}
 	
 	@Override
-	protected String read() {
-		// TODO Auto-generated method stub
-		return null;
+	public String read(Object inputVector) throws InterruptedException {
+		return queue.take();
 	}
-
 }

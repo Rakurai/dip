@@ -1,16 +1,28 @@
 package dip.core;
 
+import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.ArrayList;
 import java.util.List;
 
-import dip.modules.Module;
+import dip.core.RunnableModule;
 
 public class CoreWorker implements Runnable {
-	List<Module> readers;
-	List<Module> converters;
-	List<Module> writers;
-	
-	public CoreWorker(List<Module> readers, List<Module> converters, List<Module> writers) {
+	List<RunnableModule> readers;
+	List<RunnableModule> converters;
+	List<RunnableModule> writers;
+
+	List<Thread> readerThreads = new ArrayList<Thread>();
+	List<Thread> converterThreads = new ArrayList<Thread>();
+	List<Thread> writerThreads = new ArrayList<Thread>();
+
+	UncaughtExceptionHandler handler = new UncaughtExceptionHandler() {
+		@Override
+		public void uncaughtException(Thread t, Throwable e) {
+			terminateThreads();
+		}
+	};
+
+	public CoreWorker(List<RunnableModule> readers, List<RunnableModule> converters, List<RunnableModule> writers) {
 		this.readers = readers;
 		this.converters = converters;
 		this.writers = writers;
@@ -18,29 +30,30 @@ public class CoreWorker implements Runnable {
 
 	@Override
 	public void run() {
-		List<Thread> readerThreads = new ArrayList<Thread>();
-		List<Thread> converterThreads = new ArrayList<Thread>();
-		List<Thread> writerThreads = new ArrayList<Thread>();
+		
 
 		// start all threads
 
-		for (Module module: readers) {
+		for (RunnableModule module: readers) {
 			module.setRunState(RunState.RUN);
 			Thread thread = new Thread(module);
+			thread.setUncaughtExceptionHandler(handler);
 			readerThreads.add(thread);
 			thread.start();
 		}
 
-		for (Module module: converters) {
+		for (RunnableModule module: converters) {
 			module.setRunState(RunState.RUN);
 			Thread thread = new Thread(module);
+			thread.setUncaughtExceptionHandler(handler);
 			converterThreads.add(thread);
 			thread.start();
 		}
 
-		for (Module module: writers) {
+		for (RunnableModule module: writers) {
 			module.setRunState(RunState.RUN);
 			Thread thread = new Thread(module);
+			thread.setUncaughtExceptionHandler(handler);
 			writerThreads.add(thread);
 			thread.start();
 		}
@@ -57,7 +70,7 @@ public class CoreWorker implements Runnable {
 
 		// signal the converters to finish up their queue
 		
-		for (Module module: converters)
+		for (RunnableModule module: converters)
 			module.setRunState(RunState.FINISH);
 
 		// wait for the converters to finish
@@ -72,7 +85,7 @@ public class CoreWorker implements Runnable {
 
 		// signal the writers to finish their queue
 		
-		for (Module module: writers)
+		for (RunnableModule module: writers)
 			module.setRunState(RunState.FINISH);
 
 		// wait for the writers to finish
@@ -87,13 +100,23 @@ public class CoreWorker implements Runnable {
 
 		// clean up all modules
 
-		for (Module module: readers)
-			module.cleanup();
-		for (Module module: converters)
-			module.cleanup();
-		for (Module module: writers)
-			module.cleanup();
+		for (RunnableModule module: readers)
+			module.getModule().cleanup();
+		for (RunnableModule module: converters)
+			module.getModule().cleanup();
+		for (RunnableModule module: writers)
+			module.getModule().cleanup();
 
 	}
 
+	private void terminateThreads() {
+		for (Thread thread: readerThreads)
+			thread.interrupt();
+
+		for (Thread thread: converterThreads)
+			thread.interrupt();
+
+		for (Thread thread: writerThreads)
+			thread.interrupt();
+	}
 }

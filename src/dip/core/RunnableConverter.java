@@ -1,22 +1,23 @@
-package dip.modules.converters;
+package dip.core;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-import dip.modules.AbstractModule;
+import dip.modules.Converter;
+import dip.modules.Module;
 import dip.core.RunState;
 
-public abstract class AbstractConverter<INPUT, OUTPUT> extends AbstractModule implements Converter {
+public class RunnableConverter<INPUT, OUTPUT> extends AbstractRunnableModule {
 	private BlockingQueue<INPUT> input;
 	private BlockingQueue<OUTPUT> output;
+	private Converter<INPUT, OUTPUT> converter;
 
-	protected AbstractConverter(BlockingQueue<INPUT> input, BlockingQueue<OUTPUT> output) {
+	public RunnableConverter(BlockingQueue<INPUT> input, BlockingQueue<OUTPUT> output, Converter<INPUT, OUTPUT> converter) {
 		this.input = input;
 		this.output = output;
+		this.converter = converter;
 	}
 
-	protected abstract OUTPUT convert(INPUT obj) throws Exception;
-	
 	@Override
 	public void run() {
 		try {
@@ -30,7 +31,7 @@ public abstract class AbstractConverter<INPUT, OUTPUT> extends AbstractModule im
 						continue;
 				}
 
-				OUTPUT out = convert(in);
+				OUTPUT out = converter.convert(in);
 				core.getRegistry().update(in, out);
 				output.put(out);
 			}
@@ -40,7 +41,7 @@ public abstract class AbstractConverter<INPUT, OUTPUT> extends AbstractModule im
 	}
 
 	@Override
-	public void cleanup() {
-		// do nothing
+	public Module getModule() {
+		return converter;
 	}
 }

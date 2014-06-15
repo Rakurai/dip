@@ -1,8 +1,5 @@
 package dip.modules.writers.cassandra;
 
-
-import java.util.concurrent.BlockingQueue;
-
 import dip.modules.AbstractWriter;
 
 import com.datastax.driver.core.Cluster;
@@ -10,15 +7,15 @@ import com.datastax.driver.core.Metadata;
 import com.datastax.driver.core.Session;
 import com.datastax.driver.core.Statement;
 
-public class CassandraWriter extends AbstractWriter<Statement> {
-	private static Cluster cluster = null;
+public class CassandraWriter extends AbstractWriter<Statement, Session> {
+/*	private static Cluster cluster = null;
 	private Session session;
-	
-	public CassandraWriter(BlockingQueue<Statement> q) {
-		super(q);
+*/
+	public CassandraWriter(Session session) {
+		super(session);
 	}
 	
-	public synchronized void init(String node, String host, int port, String table_name) throws Exception {
+/*	public synchronized void init(String node, String host, int port, String table_name) throws Exception {
 		if (cluster == null) {
 			this.cluster = Cluster.builder().addContactPoint(node).build();
 			Metadata metadata = cluster.getMetadata();
@@ -26,9 +23,9 @@ public class CassandraWriter extends AbstractWriter<Statement> {
 		}
 		session = cluster.connect();
 	}
-
+*/
 	@Override
-	public void write(Statement obj) {
+	public void write(Statement obj, Session session) {
 		while (true) {
 			try {
 				session.execute(obj);
@@ -42,9 +39,9 @@ public class CassandraWriter extends AbstractWriter<Statement> {
 	@Override
 	public synchronized void cleanup() {
 		super.cleanup();
-		if (cluster != null) {
+/*		if (cluster != null) {
 			cluster.close();
 		}
-	}
+*/	}
 }
 

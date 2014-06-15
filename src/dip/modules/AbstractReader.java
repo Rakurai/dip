@@ -1,33 +1,38 @@
 package dip.modules;
 
-import java.util.concurrent.BlockingQueue;
+public abstract class AbstractReader<INPUT, OUTPUT> implements Reader<INPUT, OUTPUT> {
+	protected IOMapper<INPUT> inputMapper = null;
 
-import dip.modules.AbstractModule;
-import dip.core.RunState;
+	public AbstractReader(IOMapper<INPUT> mapper) {
+		inputMapper = mapper;
+	}
+	
+	public AbstractReader(final INPUT inputVector) {
+		this(new IOMapper<INPUT>() {
+			@Override
+			public INPUT acquire() {
+				return inputVector;
+			}
 
-public abstract class AbstractReader<OUTPUT> extends AbstractModule implements Reader {
-	protected BlockingQueue<OUTPUT> q;
-
-	public AbstractReader(BlockingQueue<OUTPUT> q) {
-		this.q = q;
+			@Override
+			public void release(INPUT val) {
+				// do nothing
+			}
+		});
 	}
 
-	protected abstract OUTPUT read() throws Exception;
+	public AbstractReader() {
+		this((INPUT)null);
+	}
 
 	@Override
-	public void run() {
-		try {
-			while (runState == RunState.RUN) {
-				OUTPUT obj = read();
-				if (obj == null)
-					break;
-				
-				core.getRegistry().register(obj);
-				q.put(obj);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public INPUT acquireInputVector() {
+		return inputMapper.acquire();
+	}
+
+	@Override
+	public void releaseInputVector(INPUT inputVector) {
+		inputMapper.release(inputVector);
 	}
 
 	@Override

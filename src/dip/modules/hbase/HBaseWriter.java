@@ -1,8 +1,5 @@
 package dip.modules.hbase;
 
-
-import java.util.concurrent.BlockingQueue;
-
 import dip.modules.AbstractWriter;
 
 import org.apache.hadoop.conf.Configuration;
@@ -14,15 +11,15 @@ import org.apache.hadoop.hbase.client.HBaseAdmin;
 import org.apache.hadoop.hbase.client.HTable;
 import org.apache.hadoop.hbase.client.Put;
 
-public class HBaseWriter extends AbstractWriter<Put> {
-	private static Configuration conf = null;
+public class HBaseWriter extends AbstractWriter<Put, HTable> {
+/*	private static Configuration conf = null;
 	private HBaseAdmin hbase;
 	private HTable table;
-	
-	public HBaseWriter(BlockingQueue<Put> q) {
-		super(q);
+*/	
+	public HBaseWriter(HTable table) {
+		super(table);
 	}
-	
+/*	
 	public synchronized void init(String hbaseSitePath, String host, int port, String table_name) throws Exception {
 		if (conf == null) {
 			this.conf = HBaseConfiguration.create();
@@ -39,9 +36,9 @@ public class HBaseWriter extends AbstractWriter<Put> {
 		
 		table = new HTable(conf, table_name);
 	}
-
+*/
 	@Override
-	public void write(Put obj) {
+	public void write(Put obj, HTable table) {
 		while (true) {
 			try {
 				table.put(obj);
@@ -55,7 +52,7 @@ public class HBaseWriter extends AbstractWriter<Put> {
 	@Override
 	public synchronized void cleanup() {
 		super.cleanup();
-		if (conf != null) {
+/*		if (conf != null) {
 			try {
 				hbase.close();
 				conf.clear();
@@ -64,6 +61,7 @@ public class HBaseWriter extends AbstractWriter<Put> {
 				e.printStackTrace();
 			}
 		}
+*/
 	}
 }
 

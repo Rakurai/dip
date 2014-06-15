@@ -1,7 +1,6 @@
 package dip.modules.xml;
 
 import java.io.OutputStream;
-import java.util.concurrent.BlockingQueue;
 
 import javax.xml.transform.Transformer;
 import javax.xml.transform.dom.DOMSource;
@@ -9,15 +8,15 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 
-import dip.modules.AbstractMultiWriter;
+import dip.modules.AbstractWriter;
 import dip.modules.IOMapper;
 
-public class XMLMultiStreamWriter extends AbstractMultiWriter<Document, OutputStream> {
+public class XMLStreamWriter extends AbstractWriter<Document, OutputStream> {
 
 	private Transformer transformer;
 
-	public XMLMultiStreamWriter(BlockingQueue<Document> q, Transformer transformer, IOMapper<OutputStream> mapper) {
-		super(q, mapper);
+	public XMLStreamWriter(Transformer transformer, IOMapper<OutputStream> mapper) {
+		super(mapper);
 		this.transformer = transformer;
 	}
 

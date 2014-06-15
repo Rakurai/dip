@@ -1,6 +1,7 @@
 package dip.modules;
 
-import dip.modules.Module;
-
-public interface Reader extends Module {
+public interface Reader<INPUT, OUTPUT> extends Module {
+	public OUTPUT read(INPUT inputVector) throws Exception;
+	public INPUT acquireInputVector();
+	public void releaseInputVector(INPUT inputVector);
 }

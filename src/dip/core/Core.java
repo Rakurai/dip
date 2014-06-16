@@ -11,6 +11,7 @@ public class Core {
 	List<RunnableModule> readers = new ArrayList<RunnableModule>();
 	List<RunnableModule> converters = new ArrayList<RunnableModule>();
 	List<RunnableModule> writers = new ArrayList<RunnableModule>();
+	List<RunnableModule> tools = new ArrayList<RunnableModule>();
 	
 	public void addModule(RunnableModule module) {
 		module.setCore(this);
@@ -31,9 +32,9 @@ public class Core {
 		writers.add(module);
 	}
 
-	public void addManager(RunnableModule module) {
+	public void addAnalysisTool(RunnableAnalysisTool module) {
 		addModule(module);
-		writers.add(module);
+		tools.add(module);
 	}
 
 	public Registry getRegistry() {
@@ -50,7 +51,7 @@ public class Core {
 			throw new Exception("Must have at least one reader and one writer.");
 		}
 		
-		worker = new CoreWorker(readers, converters, writers);
+		worker = new CoreWorker(readers, converters, writers, tools);
 
 		workerThread = new Thread(worker);
 		workerThread.run();

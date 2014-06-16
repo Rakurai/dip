@@ -42,6 +42,6 @@ public class RunnableConverter<INPUT, OUTPUT> extends AbstractRunnableModule {
 
 	@Override
 	public Module getModule() {
-		return converter;
+		return (Module)converter;
 	}
 }

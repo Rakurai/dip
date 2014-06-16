@@ -7,31 +7,35 @@ import java.util.List;
 import dip.core.RunnableModule;
 
 public class CoreWorker implements Runnable {
-	List<RunnableModule> readers;
-	List<RunnableModule> converters;
-	List<RunnableModule> writers;
+	private List<RunnableModule> readers;
+	private List<RunnableModule> converters;
+	private List<RunnableModule> writers;
+	private List<RunnableModule> tools;
 
-	List<Thread> readerThreads = new ArrayList<Thread>();
-	List<Thread> converterThreads = new ArrayList<Thread>();
-	List<Thread> writerThreads = new ArrayList<Thread>();
+	private List<Thread> readerThreads = new ArrayList<Thread>();
+	private List<Thread> converterThreads = new ArrayList<Thread>();
+	private List<Thread> writerThreads = new ArrayList<Thread>();
+	private List<Thread> toolThreads = new ArrayList<Thread>();
 
-	UncaughtExceptionHandler handler = new UncaughtExceptionHandler() {
+	private UncaughtExceptionHandler handler = new UncaughtExceptionHandler() {
 		@Override
 		public void uncaughtException(Thread t, Throwable e) {
-			terminateThreads();
+			terminateThreads(readerThreads);
+			terminateThreads(converterThreads);
+			terminateThreads(writerThreads);
+			terminateThreads(toolThreads);
 		}
 	};
 
-	public CoreWorker(List<RunnableModule> readers, List<RunnableModule> converters, List<RunnableModule> writers) {
+	public CoreWorker(List<RunnableModule> readers, List<RunnableModule> converters, List<RunnableModule> writers, List<RunnableModule> tools) {
 		this.readers = readers;
 		this.converters = converters;
 		this.writers = writers;
+		this.tools = tools;
 	}
 
 	@Override
 	public void run() {
-		
-
 		// start all threads
 
 		for (RunnableModule module: readers) {
@@ -55,6 +59,14 @@ public class CoreWorker implements Runnable {
 			Thread thread = new Thread(module);
 			thread.setUncaughtExceptionHandler(handler);
 			writerThreads.add(thread);
+			thread.start();
+		}
+
+		for (RunnableModule module: tools) {
+			module.setRunState(RunState.RUN);
+			Thread thread = new Thread(module);
+			thread.setUncaughtExceptionHandler(handler);
+			toolThreads.add(thread);
 			thread.start();
 		}
 
@@ -97,7 +109,7 @@ public class CoreWorker implements Runnable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
+		
 		// clean up all modules
 
 		for (RunnableModule module: readers)
@@ -107,16 +119,11 @@ public class CoreWorker implements Runnable {
 		for (RunnableModule module: writers)
 			module.getModule().cleanup();
 
+		terminateThreads(toolThreads);
 	}
 
-	private void terminateThreads() {
-		for (Thread thread: readerThreads)
-			thread.interrupt();
-
-		for (Thread thread: converterThreads)
-			thread.interrupt();
-
-		for (Thread thread: writerThreads)
+	private void terminateThreads(List<Thread> threads) {
+		for (Thread thread: threads)
 			thread.interrupt();
 	}
 }

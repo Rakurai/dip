@@ -35,6 +35,6 @@ public class RunnableReader<INPUT, OUTPUT> extends AbstractRunnableModule {
 
 	@Override
 	public Module getModule() {
-		return reader;
+		return (Module) reader;
 	}
 }

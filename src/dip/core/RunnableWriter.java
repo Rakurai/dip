@@ -40,6 +40,6 @@ public class RunnableWriter<INPUT, OUTPUT> extends AbstractRunnableModule {
 
 	@Override
 	public Module getModule() {
-		return writer;
+		return (Module) writer;
 	}
 }

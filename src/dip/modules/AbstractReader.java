@@ -1,6 +1,6 @@
 package dip.modules;
 
-public abstract class AbstractReader<INPUT, OUTPUT> implements Reader<INPUT, OUTPUT> {
+public abstract class AbstractReader<INPUT, OUTPUT> extends AbstractModule implements Reader<INPUT, OUTPUT> {
 	protected IOMapper<INPUT> inputMapper = null;
 
 	public AbstractReader(IOMapper<INPUT> mapper) {

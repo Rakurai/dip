@@ -7,15 +7,16 @@ import com.mongodb.DBObject;
 import com.mongodb.DBCollection;
 
 import dip.core.Core;
+import dip.core.RunnableAnalysisTool;
 import dip.core.RunnableConverter;
 import dip.core.RunnableReader;
 import dip.core.RunnableWriter;
 import dip.modules.Converter;
 import dip.modules.Reader;
 import dip.modules.Writer;
-import dip.modules.managers.StatusManager;
 import dip.modules.mongo.MongoCollectionFactory;
 import dip.modules.mongo.MongoWriter;
+import dip.modules.analysis.QueueAnalysisTool;
 import dip.modules.converters.mongo.JSONStringtoMongoDBObjectConverter;
 import dip.modules.twitter.Twitter4jReader;
 
@@ -45,11 +46,11 @@ public class Twitter2Mongo {
 			};
 			core.addWriter(new RunnableWriter<DBObject, DBCollection>(outputQueue, writer));
 			
-			StatusManager manager = new StatusManager();
-			manager.addQueue(inputQueue);
-			manager.addQueue(outputQueue);
-			
-			core.addManager(manager);
+			QueueAnalysisTool tool = new QueueAnalysisTool();
+			tool.addQueue(inputQueue);
+			tool.addQueue(outputQueue);			
+			core.addAnalysisTool(new RunnableAnalysisTool(tool));
+
 			core.start();
 
 			factory.cleanup();

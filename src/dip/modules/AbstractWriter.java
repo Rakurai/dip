@@ -1,6 +1,6 @@
 package dip.modules;
 
-public abstract class AbstractWriter<INPUT, OUTPUT> implements Writer<INPUT, OUTPUT> {
+public abstract class AbstractWriter<INPUT, OUTPUT> extends AbstractModule implements Writer<INPUT, OUTPUT> {
 	protected IOMapper<OUTPUT> outputMapper = null;
 
 	public AbstractWriter(IOMapper<OUTPUT> mapper) {

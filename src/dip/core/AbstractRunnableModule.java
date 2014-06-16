@@ -3,7 +3,7 @@ package dip.core;
 public abstract class AbstractRunnableModule implements RunnableModule {
 	protected RunState runState;
 	protected Core core;
-	
+		
 	public void setRunState(RunState state) {
 		this.runState = state;
 	}

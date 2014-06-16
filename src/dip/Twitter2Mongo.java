@@ -37,14 +37,7 @@ public class Twitter2Mongo {
 			core.addConverter(new RunnableConverter<String, DBObject>(inputQueue, outputQueue, converter));
 
 			MongoCollectionFactory factory = new MongoCollectionFactory("thecave.cs.clemson.edu", 27017);
-			Writer<DBObject, DBCollection> writer = new MongoWriter(factory.getCollection("twitter", "feed")) {
-				int n = 1;
-				@Override
-				public void write(DBObject obj, DBCollection collection, Metadata metadata) {
-					super.write(obj, collection, metadata);
-					System.out.println("writting feed " + n++);
-				}
-			};
+			Writer<DBObject, DBCollection> writer = new MongoWriter(factory.getCollection("twitter", "feed"));
 			core.addWriter(new RunnableWriter<DBObject, DBCollection>(outputQueue, writer));
 			
 			QueueAnalysisTool tool = new QueueAnalysisTool();

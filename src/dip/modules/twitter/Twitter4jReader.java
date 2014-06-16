@@ -18,7 +18,7 @@ import twitter4j.TwitterObjectFactory;
 
 public class Twitter4jReader extends AbstractReader<Object, String> {
 	BlockingQueue<String> queue = new ArrayBlockingQueue<String>(100);
-	
+
 	public Twitter4jReader() {
 		super();
         TwitterStream twitterStream = new TwitterStreamFactory().getInstance();
@@ -66,7 +66,7 @@ public class Twitter4jReader extends AbstractReader<Object, String> {
         twitterStream.addListener(listener);
         twitterStream.sample();
 	}
-	
+
 	@Override
 	public String read(Object obj, Metadata metadata) throws InterruptedException {
 		return queue.take();

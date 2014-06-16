@@ -40,7 +40,7 @@ public class RunnableConverter<INPUT, OUTPUT> extends AbstractRunnableModule {
 			e.printStackTrace();
 		}
 	}
-
+	
 	@Override
 	public Module getModule() {
 		return (Module)converter;

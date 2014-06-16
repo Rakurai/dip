@@ -6,11 +6,11 @@ import dip.modules.Module;
 import dip.modules.Reader;
 
 public class RunnableReader<INPUT, OUTPUT> extends AbstractRunnableModule {
-	private BlockingQueue<OUTPUT> output;
+	private BlockingQueue<OUTPUT> outputQueue;
 	private Reader<INPUT, OUTPUT> reader;
 	
-	public RunnableReader(BlockingQueue<OUTPUT> output, Reader<INPUT, OUTPUT> reader) {
-		this.output = output;
+	public RunnableReader(BlockingQueue<OUTPUT> outputQueue, Reader<INPUT, OUTPUT> reader) {
+		this.outputQueue = outputQueue;
 		this.reader = reader;
 	}
 
@@ -19,21 +19,30 @@ public class RunnableReader<INPUT, OUTPUT> extends AbstractRunnableModule {
 		try {
 			while (runState == RunState.RUN) {
 				Metadata metadata = core.getRegistry().newMetadata();
-				INPUT inputVector = reader.acquireInputVector(metadata);
-				OUTPUT obj = reader.read(inputVector, metadata);
-				reader.releaseInputVector(inputVector);
+				OUTPUT obj = read(metadata);
 
 				if (obj == null)
 					break;
-				
-				core.getRegistry().register(obj, metadata);
-				output.put(obj);
+
+				queue(obj, metadata);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
+	protected OUTPUT read(Metadata metadata) throws Exception {
+		INPUT inputVector = reader.acquireInputVector(metadata);
+		OUTPUT obj = reader.read(inputVector, metadata);
+		reader.releaseInputVector(inputVector);
+		return obj;
+	}
+
+	protected void queue(OUTPUT obj, Metadata metadata) throws InterruptedException {
+		core.getRegistry().register(obj, metadata);
+		outputQueue.put(obj);
+	}
+	
 	@Override
 	public Module getModule() {
 		return (Module) reader;

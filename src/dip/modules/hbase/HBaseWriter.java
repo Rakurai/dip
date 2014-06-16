@@ -1,5 +1,6 @@
 package dip.modules.hbase;
 
+import dip.core.Metadata;
 import dip.modules.AbstractWriter;
 
 import org.apache.hadoop.conf.Configuration;
@@ -38,7 +39,7 @@ public class HBaseWriter extends AbstractWriter<Put, HTable> {
 	}
 */
 	@Override
-	public void write(Put obj, HTable table) {
+	public void write(Put obj, HTable table, Metadata metadata) {
 		while (true) {
 			try {
 				table.put(obj);

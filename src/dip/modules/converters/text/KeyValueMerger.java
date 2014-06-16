@@ -2,6 +2,7 @@ package dip.modules.converters.text;
 
 import java.util.Map.Entry;
 
+import dip.core.Metadata;
 import dip.modules.AbstractConverter;
 
 public class KeyValueMerger extends
@@ -14,7 +15,7 @@ public class KeyValueMerger extends
 	}
 
 	@Override
-	public String convert(Entry<String, String> entry) throws Exception {
+	public String convert(Entry<String, String> entry, Metadata metadata) throws Exception {
 		return entry.getKey() + delimiter + entry.getValue();
 	}
 }

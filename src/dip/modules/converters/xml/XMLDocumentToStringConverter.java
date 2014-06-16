@@ -8,6 +8,7 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 
+import dip.core.Metadata;
 import dip.modules.AbstractConverter;
 
 public class XMLDocumentToStringConverter extends AbstractConverter<Document, String> {
@@ -19,7 +20,7 @@ public class XMLDocumentToStringConverter extends AbstractConverter<Document, St
 	}
 
 	@Override
-	public String convert(Document doc) throws Exception {
+	public String convert(Document doc, Metadata metadata) throws Exception {
 		StringWriter writer = new StringWriter();
 		transformer.transform(new DOMSource(doc), new StreamResult(writer));
 		return writer.getBuffer().toString();

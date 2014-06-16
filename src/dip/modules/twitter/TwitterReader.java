@@ -16,6 +16,7 @@ import com.twitter.hbc.httpclient.auth.Authentication;
 import com.twitter.hbc.httpclient.auth.OAuth1;
 import com.twitter.hbc.twitter4j.Twitter4jStatusClient;
 
+import dip.core.Metadata;
 import dip.core.RunnableReader;
 import dip.modules.AbstractReader;
 import twitter4j.StallWarning;
@@ -121,7 +122,7 @@ public class TwitterReader extends AbstractReader<Object, String> {
 	}
 	
 	@Override
-	public String read(Object inputVector) throws InterruptedException {
+	public String read(Object inputVector, Metadata metadata) throws InterruptedException {
 		return queue.take();
 	}
 }

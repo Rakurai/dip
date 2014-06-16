@@ -7,6 +7,7 @@ import com.mongodb.DBObject;
 import com.mongodb.DBCollection;
 
 import dip.core.Core;
+import dip.core.Metadata;
 import dip.core.RunnableAnalysisTool;
 import dip.core.RunnableConverter;
 import dip.core.RunnableReader;
@@ -39,8 +40,8 @@ public class Twitter2Mongo {
 			Writer<DBObject, DBCollection> writer = new MongoWriter(factory.getCollection("twitter", "feed")) {
 				int n = 1;
 				@Override
-				public void write(DBObject obj, DBCollection collection) {
-					super.write(obj, collection);
+				public void write(DBObject obj, DBCollection collection, Metadata metadata) {
+					super.write(obj, collection, metadata);
 					System.out.println("writting feed " + n++);
 				}
 			};

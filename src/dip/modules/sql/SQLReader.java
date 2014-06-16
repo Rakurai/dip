@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+import dip.core.Metadata;
 import dip.modules.AbstractReader;
 
 public class SQLReader extends AbstractReader<ResultSet, Map<String, Object>> {
@@ -17,7 +18,7 @@ public class SQLReader extends AbstractReader<ResultSet, Map<String, Object>> {
 	}
 
 	@Override
-	public Map<String, Object> read(ResultSet rs) throws SQLException {
+	public Map<String, Object> read(ResultSet rs, Metadata metadata) throws SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		if (!rs.next())

@@ -3,6 +3,7 @@ package dip.modules.stream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
+import dip.core.Metadata;
 import dip.modules.AbstractWriter;
 import dip.modules.IOMapper;
 
@@ -21,7 +22,7 @@ public class StreamWriter extends AbstractWriter<String, OutputStreamWriter> {
 	}
 	
 	@Override
-	public void write(String str, OutputStreamWriter writer) throws Exception {
+	public void write(String str, OutputStreamWriter writer, Metadata metadata) throws Exception {
 		writer.write(str);
 	}
 }

@@ -25,7 +25,7 @@ public class CassandraWriter extends AbstractWriter<Statement, Session> {
 	}
 */
 	@Override
-	public void write(Statement obj, Session session) {
+	public void write(Statement obj, Session session, dip.core.Metadata metadata) {
 		while (true) {
 			try {
 				session.execute(obj);

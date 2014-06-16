@@ -31,7 +31,8 @@ public class RunnableConverter<INPUT, OUTPUT> extends AbstractRunnableModule {
 						continue;
 				}
 
-				OUTPUT out = converter.convert(in);
+				Metadata metadata = core.getRegistry().get(in);
+				OUTPUT out = converter.convert(in, metadata);
 				core.getRegistry().update(in, out);
 				output.put(out);
 			}

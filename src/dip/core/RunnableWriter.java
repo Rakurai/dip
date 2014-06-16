@@ -28,9 +28,9 @@ public class RunnableWriter<INPUT, OUTPUT> extends AbstractRunnableModule {
 						continue;
 				}
 
-				core.getRegistry().deregister(obj);
-				OUTPUT outputVector = writer.acquireOutputVector();
-				writer.write(obj, outputVector);
+				Metadata metadata = core.getRegistry().deregister(obj);
+				OUTPUT outputVector = writer.acquireOutputVector(metadata);
+				writer.write(obj, outputVector, metadata);
 				writer.releaseOutputVector(outputVector);
 			}
 		} catch (Exception e) {

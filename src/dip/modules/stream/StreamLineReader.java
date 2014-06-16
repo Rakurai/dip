@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import dip.core.Metadata;
 import dip.modules.AbstractReader;
 import dip.modules.IOMapper;
 
@@ -22,7 +23,7 @@ public class StreamLineReader extends AbstractReader<BufferedReader, String> {
 	}
 
 	@Override
-	public String read(BufferedReader reader) throws Exception {
+	public String read(BufferedReader reader, Metadata metadata) throws Exception {
 		return reader.readLine();
 	}
 }

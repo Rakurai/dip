@@ -7,6 +7,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
 
+import dip.core.Metadata;
 import dip.modules.AbstractReader;
 import dip.modules.IOMapper;
 
@@ -19,7 +20,7 @@ public class XMLFileReader extends AbstractReader<File, Document> {
 	}
 
 	@Override
-	public Document read(File file) throws Exception {
+	public Document read(File file, Metadata metadata) throws Exception {
 		return builder.parse(file);
 	}
 

@@ -1,6 +1,8 @@
 package dip.modules;
 
+import dip.core.Metadata;
+
 public abstract class IOMapper<T> {
-	public abstract T acquire();
+	public abstract T acquire(Metadata metadata);
 	public abstract void release(T val);
 }

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import dip.core.Metadata;
 import dip.modules.AbstractWriter;
 
 public class SQLWriter extends AbstractWriter<Map<String, Object>, Connection> {
@@ -19,7 +20,7 @@ public class SQLWriter extends AbstractWriter<Map<String, Object>, Connection> {
 	}
 
 	@Override
-	public void write(Map<String, Object> map, Connection connection) throws Exception {
+	public void write(Map<String, Object> map, Connection connection, Metadata metadata) throws Exception {
 		ArrayList<Object> vals = new ArrayList<Object>();
 		StringBuilder keyString = new StringBuilder();
 		StringBuilder valString = new StringBuilder();

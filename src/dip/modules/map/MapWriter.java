@@ -2,6 +2,7 @@ package dip.modules.map;
 
 import java.util.Map;
 
+import dip.core.Metadata;
 import dip.modules.AbstractWriter;
 import dip.modules.IOMapper;
 
@@ -15,7 +16,7 @@ public class MapWriter<KEY, VALUE> extends AbstractWriter<VALUE, KEY> {
 	}
 
 	@Override
-	public void write(VALUE value, KEY key) throws Exception {
+	public void write(VALUE value, KEY key, Metadata metadata) throws Exception {
 		map.put(key, value);
 	}
 }

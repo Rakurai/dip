@@ -18,14 +18,15 @@ public class RunnableReader<INPUT, OUTPUT> extends AbstractRunnableModule {
 	public void run() {
 		try {
 			while (runState == RunState.RUN) {
-				INPUT inputVector = reader.acquireInputVector();
-				OUTPUT obj = reader.read(inputVector);
+				Metadata metadata = core.getRegistry().newMetadata();
+				INPUT inputVector = reader.acquireInputVector(metadata);
+				OUTPUT obj = reader.read(inputVector, metadata);
 				reader.releaseInputVector(inputVector);
 
 				if (obj == null)
 					break;
 				
-				core.getRegistry().register(obj);
+				core.getRegistry().register(obj, metadata);
 				output.put(obj);
 			}
 		} catch (Exception e) {

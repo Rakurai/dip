@@ -8,6 +8,7 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 
+import dip.core.Metadata;
 import dip.modules.AbstractWriter;
 import dip.modules.IOMapper;
 
@@ -20,7 +21,7 @@ public class XMLFileWriter extends AbstractWriter<Document, File> {
 	}
 
 	@Override
-	public void write(Document doc, File file) throws Exception {
+	public void write(Document doc, File file, Metadata metadata) throws Exception {
         transformer.transform(new DOMSource(doc.getDocumentElement()), new StreamResult(file));
 	}
 

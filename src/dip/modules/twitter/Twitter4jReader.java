@@ -3,6 +3,7 @@ package dip.modules.twitter;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
+import dip.core.Metadata;
 import dip.modules.AbstractReader;
 import twitter4j.StallWarning;
 import twitter4j.Status;
@@ -67,7 +68,7 @@ public class Twitter4jReader extends AbstractReader<Object, String> {
 	}
 	
 	@Override
-	public String read(Object obj) throws InterruptedException {
+	public String read(Object obj, Metadata metadata) throws InterruptedException {
 		return queue.take();
 	}
 

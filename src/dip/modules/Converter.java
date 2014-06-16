@@ -1,5 +1,7 @@
 package dip.modules;
 
+import dip.core.Metadata;
+
 public interface Converter<INPUT, OUTPUT> {
-	public OUTPUT convert(INPUT in) throws Exception;
+	public OUTPUT convert(INPUT in, Metadata metadata) throws Exception;
 }

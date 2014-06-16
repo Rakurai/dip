@@ -6,6 +6,7 @@ import java.io.ByteArrayOutputStream;
 import org.openexi.sax.Transmogrifier;
 import org.xml.sax.InputSource;
 
+import dip.core.Metadata;
 import dip.modules.AbstractConverter;
 
 public class XMLStringCompressor extends AbstractConverter<String, byte[]> {
@@ -17,7 +18,7 @@ public class XMLStringCompressor extends AbstractConverter<String, byte[]> {
 	}
 
 	@Override
-	public byte[] convert(String str) throws Exception {
+	public byte[] convert(String str, Metadata metadata) throws Exception {
 		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
 		transmogrifier.setOutputStream(byteStream);
 		transmogrifier.encode(new InputSource(new ByteArrayInputStream(str.getBytes("utf-8"))));

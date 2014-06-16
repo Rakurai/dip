@@ -1,5 +1,6 @@
 package dip.modules.mongo;
 
+import dip.core.Metadata;
 import dip.modules.AbstractWriter;
 
 import com.mongodb.DBCollection;
@@ -11,7 +12,7 @@ public class MongoWriter extends AbstractWriter<DBObject, DBCollection> {
 	}
 	
 	@Override
-	public void write(DBObject obj, DBCollection collection) {
+	public void write(DBObject obj, DBCollection collection, Metadata metadata) {
 		while (true) {
 			collection.insert(obj);
 		}

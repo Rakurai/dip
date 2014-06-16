@@ -8,6 +8,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
+import dip.core.Metadata;
 import dip.modules.AbstractConverter;
 
 public class XMLStringToDocumentConverter extends AbstractConverter<String, Document> {
@@ -19,7 +20,7 @@ public class XMLStringToDocumentConverter extends AbstractConverter<String, Docu
 	}
 
 	@Override
-	public Document convert(String str) throws Exception {
+	public Document convert(String str, Metadata metadata) throws Exception {
         InputSource source = new InputSource(new StringReader(str));
         return builder.parse(source);
 	}

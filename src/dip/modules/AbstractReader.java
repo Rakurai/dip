@@ -1,5 +1,7 @@
 package dip.modules;
 
+import dip.core.Metadata;
+
 public abstract class AbstractReader<INPUT, OUTPUT> extends AbstractModule implements Reader<INPUT, OUTPUT> {
 	protected IOMapper<INPUT> inputMapper = null;
 
@@ -10,7 +12,7 @@ public abstract class AbstractReader<INPUT, OUTPUT> extends AbstractModule imple
 	public AbstractReader(final INPUT inputVector) {
 		this(new IOMapper<INPUT>() {
 			@Override
-			public INPUT acquire() {
+			public INPUT acquire(Metadata metadata) {
 				return inputVector;
 			}
 
@@ -26,8 +28,8 @@ public abstract class AbstractReader<INPUT, OUTPUT> extends AbstractModule imple
 	}
 
 	@Override
-	public INPUT acquireInputVector() {
-		return inputMapper.acquire();
+	public INPUT acquireInputVector(Metadata metadata) {
+		return inputMapper.acquire(metadata);
 	}
 
 	@Override

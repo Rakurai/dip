@@ -4,6 +4,7 @@ import java.io.File;
 
 import dip.modules.AbstractWriter;
 import dip.modules.IOMapper;
+import dip.core.Metadata;
 
 public class FileWriter extends AbstractWriter<String, File> {
 
@@ -23,7 +24,7 @@ public class FileWriter extends AbstractWriter<String, File> {
 		this.append = append;
 	}
 
-	public void write(String str, File file) throws Exception
+	public void write(String str, File file, Metadata metadata) throws Exception
 	{
 		java.io.FileWriter writer = new java.io.FileWriter(file, append);
 		writer.write(str);

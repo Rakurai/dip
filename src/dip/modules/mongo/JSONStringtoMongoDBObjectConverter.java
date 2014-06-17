@@ -1,4 +1,4 @@
-package dip.modules.converters.mongo;
+package dip.modules.mongo;
 
 import com.mongodb.DBObject;
 import com.mongodb.util.JSON;

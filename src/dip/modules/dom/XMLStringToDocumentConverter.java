@@ -1,4 +1,4 @@
-package dip.modules.converters.xml;
+package dip.modules.dom;
 
 import java.io.StringReader;
 

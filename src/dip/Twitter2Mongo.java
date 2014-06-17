@@ -7,7 +7,6 @@ import com.mongodb.DBObject;
 import com.mongodb.DBCollection;
 
 import dip.core.Core;
-import dip.core.Metadata;
 import dip.core.RunnableAnalysisTool;
 import dip.core.RunnableConverter;
 import dip.core.RunnableReader;
@@ -18,7 +17,7 @@ import dip.modules.Writer;
 import dip.modules.mongo.MongoCollectionFactory;
 import dip.modules.mongo.MongoWriter;
 import dip.modules.analysis.QueueAnalysisTool;
-import dip.modules.converters.mongo.JSONStringtoMongoDBObjectConverter;
+import dip.modules.mongo.JSONStringtoMongoDBObjectConverter;
 import dip.modules.twitter.Twitter4jReader;
 
 public class Twitter2Mongo {
@@ -39,7 +38,7 @@ public class Twitter2Mongo {
 			MongoCollectionFactory factory = new MongoCollectionFactory("thecave.cs.clemson.edu", 27017);
 			Writer<DBObject, DBCollection> writer = new MongoWriter(factory.getCollection("twitter", "feed"));
 			core.addWriter(new RunnableWriter<DBObject, DBCollection>(outputQueue, writer));
-			
+			 
 			QueueAnalysisTool tool = new QueueAnalysisTool();
 			tool.addQueue(inputQueue);
 			tool.addQueue(outputQueue);			

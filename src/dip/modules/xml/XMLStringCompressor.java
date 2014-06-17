@@ -1,4 +1,4 @@
-package dip.modules.converters.xml;
+package dip.modules.xml;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

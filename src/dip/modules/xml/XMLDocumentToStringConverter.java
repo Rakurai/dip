@@ -23,7 +23,9 @@ public class XMLDocumentToStringConverter extends AbstractConverter<Document, St
 	public String convert(Document doc, Metadata metadata) throws Exception {
 		StringWriter writer = new StringWriter();
 		transformer.transform(new DOMSource(doc), new StreamResult(writer));
-		return writer.getBuffer().toString();
+		String str = writer.getBuffer().toString();
+		writer.close();
+		return str;
 	}
 
 }

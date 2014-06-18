@@ -1,4 +1,4 @@
-package dip.modules.dom;
+package dip.modules.xml;
 
 import java.io.StringReader;
 
@@ -21,8 +21,11 @@ public class XMLStringToDocumentConverter extends AbstractConverter<String, Docu
 
 	@Override
 	public Document convert(String str, Metadata metadata) throws Exception {
-        InputSource source = new InputSource(new StringReader(str));
-        return builder.parse(source);
+		StringReader stringReader = new StringReader(str);
+		InputSource source = new InputSource(stringReader);
+        Document doc = builder.parse(source);
+        stringReader.close();
+        return doc;
 	}
 
 }

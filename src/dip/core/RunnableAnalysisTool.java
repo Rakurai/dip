@@ -1,7 +1,7 @@
 package dip.core;
 
 import dip.core.AbstractRunnableModule;
-import dip.core.RunState;
+import dip.core.RunState.State;
 import dip.modules.Module;
 import dip.modules.analysis.AnalysisTool;
 
@@ -15,13 +15,13 @@ public class RunnableAnalysisTool extends AbstractRunnableModule {
 	@Override
 	public void run() {
 		try {
-			while (runState == RunState.RUN) {
+			while (runState.get() == State.RUN) {
 				tool.analyze();
 				Thread.sleep(1000);
 			}
 		}
-		catch (InterruptedException e) {
-			// whatever
+		catch (Exception e) {
+			throw new RuntimeException(e);
 		}
 	}
 

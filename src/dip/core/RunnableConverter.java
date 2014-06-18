@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit;
 
 import dip.modules.Converter;
 import dip.modules.Module;
-import dip.core.RunState;
+import dip.core.RunState.State;
 
 public class RunnableConverter<INPUT, OUTPUT> extends AbstractRunnableModule {
 	private BlockingQueue<INPUT> input;
@@ -21,23 +21,27 @@ public class RunnableConverter<INPUT, OUTPUT> extends AbstractRunnableModule {
 	@Override
 	public void run() {
 		try {
-			while (runState != RunState.STOP) {
+			while (runState.get() != State.STOP) {
 				INPUT in = input.poll(1, TimeUnit.SECONDS);
 
 				if (in == null) {
-					if (runState == RunState.FINISH)
+					if (runState.get() == State.FINISH)
 						break;
 					else
 						continue;
 				}
 
-				Metadata metadata = core.getRegistry().get(in);
+				Metadata metadata = core.getRegistry().deregister(in);
 				OUTPUT out = converter.convert(in, metadata);
-				core.getRegistry().update(in, out);
-				output.put(out);
+				
+				if (out != null) {
+					core.getRegistry().register(out, metadata);
+					output.put(out);
+					incrementCounter();
+				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 	}
 	

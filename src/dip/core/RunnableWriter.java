@@ -3,6 +3,7 @@ package dip.core;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
+import dip.core.RunState.State;
 import dip.modules.Module;
 import dip.modules.Writer;
 
@@ -14,15 +15,15 @@ public class RunnableWriter<INPUT, OUTPUT> extends AbstractRunnableModule {
 		this.input = input;
 		this.writer = writer;
 	}
-
+	
 	@Override
 	public void run() {
 		try {
-			while (runState != RunState.STOP) {
+			while (runState.get() != State.STOP) {
 				INPUT obj = input.poll(1, TimeUnit.SECONDS);
 
 				if (obj == null) {
-					if (runState == RunState.FINISH)
+					if (runState.get() == State.FINISH)
 						break;
 					else
 						continue;
@@ -32,9 +33,10 @@ public class RunnableWriter<INPUT, OUTPUT> extends AbstractRunnableModule {
 				OUTPUT outputVector = writer.acquireOutputVector(metadata);
 				writer.write(obj, outputVector, metadata);
 				writer.releaseOutputVector(outputVector);
+				incrementCounter();
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 	}
 

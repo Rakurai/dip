@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 
+import dip.core.Core;
+import dip.core.RunnableReader;
 import dip.modules.AbstractModule;
 
 public class QueueAnalysisTool extends AbstractModule implements AnalysisTool {
@@ -19,7 +21,7 @@ public class QueueAnalysisTool extends AbstractModule implements AnalysisTool {
 		for (BlockingQueue<?> queue: queues) {
 			System.out.print(queue.size() + " ");
 		}
-		System.out.println();
+		System.out.println(" " + RunnableReader.getCounter() + " records written");
 	}
 
 	@Override
@@ -27,5 +29,4 @@ public class QueueAnalysisTool extends AbstractModule implements AnalysisTool {
 		// TODO Auto-generated method stub
 
 	}
-
 }

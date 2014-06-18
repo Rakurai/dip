@@ -46,5 +46,6 @@ public class SQLWriter extends AbstractWriter<Map<String, Object>, Connection> {
 			pst.setObject(i+1, vals.get(i));
 
 		pst.executeUpdate();
+		pst.close();
 	}
 }

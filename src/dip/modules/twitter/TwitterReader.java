@@ -17,7 +17,6 @@ import com.twitter.hbc.httpclient.auth.OAuth1;
 import com.twitter.hbc.twitter4j.Twitter4jStatusClient;
 
 import dip.core.Metadata;
-import dip.core.RunnableReader;
 import dip.modules.AbstractReader;
 import twitter4j.StallWarning;
 import twitter4j.Status;

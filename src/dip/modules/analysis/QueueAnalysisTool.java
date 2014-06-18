@@ -6,6 +6,7 @@ import java.util.concurrent.BlockingQueue;
 
 import dip.core.Core;
 import dip.core.RunnableReader;
+import dip.core.RunnableWriter;
 import dip.modules.AbstractModule;
 
 public class QueueAnalysisTool extends AbstractModule implements AnalysisTool {
@@ -21,7 +22,11 @@ public class QueueAnalysisTool extends AbstractModule implements AnalysisTool {
 		for (BlockingQueue<?> queue: queues) {
 			System.out.print(queue.size() + " ");
 		}
-		System.out.println(" " + RunnableReader.getCounter() + " records written");
+		System.out.print(", ");
+		System.out.print(RunnableReader.getCounter() + " records read");
+		System.out.print(", ");
+		System.out.print(RunnableWriter.getCounter() + " records written");
+		System.out.println();
 	}
 
 	@Override

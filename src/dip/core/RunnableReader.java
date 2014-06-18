@@ -49,6 +49,16 @@ public class RunnableReader<INPUT, OUTPUT> extends AbstractRunnableModule {
 		outputQueue.put(obj);
 	}
 	
+	private static int counter = 0;
+
+	protected synchronized static void incrementCounter() {
+		counter++;
+	}
+	
+	public static int getCounter() {
+		return counter;
+	}
+
 	@Override
 	public Module getModule() {
 		return (Module) reader;

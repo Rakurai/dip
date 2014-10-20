@@ -5,39 +5,35 @@
               directory with the processing instruction <?eclipse.ant.import?>
               as the first entry and export the buildfile again. --><project basedir="." default="build" name="dip">
     <property environment="env"/>
-    <property name="JRE_LIB" value="../../../../Library/Java/JavaVirtualMachines/jdk1.8.0.jdk/Contents/Home/jre/lib/rt.jar"/>
+    <property name="fasta.location" value="../fasta"/>
     <property name="ECLIPSE_HOME" value="../../../../Applications/eclipse"/>
     <property name="debuglevel" value="source,lines,vars"/>
-    <property name="target" value="1.7"/>
-    <property name="source" value="1.7"/>
+    <property name="target" value="1.6"/>
+    <property name="source" value="1.6"/>
     <path id="dip.classpath">
         <pathelement location="bin"/>
         <pathelement location="jars/commons-lang3-3.3.2.jar"/>
+        <pathelement location="jars/hbc-core-2.1.1-SNAPSHOT.jar"/>
+        <pathelement location="jars/hbc-twitter4j-2.1.1-SNAPSHOT.jar"/>
+        <pathelement location="jars/mongo-2.10.1.jar"/>
         <pathelement location="jars/twitter4j-async-4.0.1.jar"/>
         <pathelement location="jars/twitter4j-core-4.0.1.jar"/>
         <pathelement location="jars/twitter4j-examples-4.0.1.jar"/>
         <pathelement location="jars/twitter4j-media-support-4.0.1.jar"/>
         <pathelement location="jars/twitter4j-stream-4.0.1.jar"/>
-        <pathelement location="jars/mongo-2.10.1.jar"/>
-        <pathelement location="jars/hbc-core-2.1.1-SNAPSHOT.jar"/>
-        <pathelement location="jars/hbc-twitter4j-2.1.1-SNAPSHOT.jar"/>
-        <pathelement location="jars/hbase-dependencies/hadoop-common-2.2.0.jar"/>
         <pathelement location="jars/hbase-dependencies/hbase-client-0.98.0-hadoop2.jar"/>
         <pathelement location="jars/hbase-dependencies/hbase-common-0.98.0-hadoop2.jar"/>
-    	<pathelement location="jars/cassandra-dependencies/cassandra-driver-core-2.0.2.jar"/>
-    	<pathelement location="jars/cassandra-dependencies/cassandra-driver-dse-2.0.2.jar"/>
-    	<pathelement location="${JRE_LIB}"/>
+        <pathelement location="jars/hbase-dependencies/hadoop-common-2.2.0.jar"/>
+        <pathelement location="jars/cassandra-dependencies/cassandra-driver-core-2.0.2.jar"/>
+        <pathelement location="jars/cassandra-dependencies/cassandra-driver-dse-2.0.2.jar"/>
+        <pathelement location="jars/nagasena.jar"/>
+        <pathelement location="../jackson/jackson-dataformat-xml/target/jackson-dataformat-xml-2.4.1-SNAPSHOT.jar"/>
+        <pathelement location="../jackson/jackson-databind/target/jackson-databind-2.4.1-SNAPSHOT.jar"/>
+        <pathelement location="../jackson/jackson-core/target/jackson-core-2.4.2-SNAPSHOT.jar"/>
+        <pathelement location="../jackson/jackson-module-jaxb-annotations/target/jackson-module-jaxb-annotations-2.4.1-SNAPSHOT.jar"/>
+        <pathelement location="../jackson/jackson-annotations/target/jackson-annotations-2.4.2-SNAPSHOT.jar"/>
+        <pathelement location="../jackson/jackson-jr/jr-all/target/jackson-jr-all-2.4.1-SNAPSHOT.jar"/>
     </path>
-    <path id="run.Twitter2File.classpath">
-        <pathelement location="${JRE_LIB}"/>
-        <path refid="dip.classpath"/>
-    </path>
-    <path id="run.Twitter2File.bootclasspath"/>
-    <path id="run.Twitter2Mongo.classpath">
-        <pathelement location="${JRE_LIB}"/>
-        <path refid="dip.classpath"/>
-    </path>
-    <path id="run.Twitter2Mongo.bootclasspath"/>
     <target name="init">
         <mkdir dir="bin"/>
         <copy includeemptydirs="false" todir="bin">
@@ -61,7 +57,14 @@
             <classpath refid="dip.classpath"/>
         </javac>
     </target>
-    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects">
+        <ant antfile="build.xml" dir="${fasta.location}" inheritAll="false" target="clean"/>
+        <ant antfile="build.xml" dir="${fasta.location}" inheritAll="false" target="build">
+            <propertyset>
+                <propertyref name="build.compiler"/>
+            </propertyset>
+        </ant>
+    </target>
     <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
         <copy todir="${ant.library.dir}">
             <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
@@ -75,21 +78,20 @@
         <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
         <antcall target="build"/>
     </target>
+    <target name="Test">
+        <java classname="dip.Test" failonerror="true" fork="yes">
+            <classpath refid="dip.classpath"/>
+        </java>
+    </target>
     <target name="Twitter2File">
         <java classname="dip.Twitter2File" failonerror="true" fork="yes">
             <arg line="output"/>
-            <classpath refid="run.Twitter2File.classpath"/>
-            <bootclasspath>
-                <path refid="run.Twitter2File.bootclasspath"/>
-            </bootclasspath>
+            <classpath refid="dip.classpath"/>
         </java>
     </target>
     <target name="Twitter2Mongo">
         <java classname="dip.Twitter2Mongo" failonerror="true" fork="yes">
-            <classpath refid="run.Twitter2Mongo.classpath"/>
-            <bootclasspath>
-                <path refid="run.Twitter2Mongo.bootclasspath"/>
-            </bootclasspath>
+            <classpath refid="dip.classpath"/>
         </java>
     </target>
 </project>

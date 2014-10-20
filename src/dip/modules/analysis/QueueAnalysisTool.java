@@ -15,9 +15,13 @@ public class QueueAnalysisTool extends AbstractModule implements AnalysisTool {
 	public void addQueue(BlockingQueue<?> queue) {
 		queues.add(queue);
 	}
+
+	long prevtime;
+	int prevcounter;
 	
 	@Override
 	public void analyze() {
+
 		System.out.print("Queue lengths: ");
 		for (BlockingQueue<?> queue: queues) {
 			System.out.print(queue.size() + " ");
@@ -26,6 +30,14 @@ public class QueueAnalysisTool extends AbstractModule implements AnalysisTool {
 		System.out.print(RunnableReader.getCounter() + " records read");
 		System.out.print(", ");
 		System.out.print(RunnableWriter.getCounter() + " records written");
+
+		long nowtime = System.nanoTime();
+		long elapsedtime = nowtime-prevtime;
+		prevtime = nowtime;
+		int nowcounter = RunnableWriter.getCounter();
+		int elapsedcounter = nowcounter-prevcounter;
+		prevcounter = nowcounter;
+		System.out.print(" (" + (elapsedcounter / (elapsedtime/1000000000.) * 60) + " records/minute");
 		System.out.println();
 	}
 

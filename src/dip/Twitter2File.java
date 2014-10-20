@@ -38,6 +38,12 @@ public class Twitter2File {
 			public void release(File val) {
 				// do nothing, don't need to close files
 			}
+
+			@Override
+			public void cleanup() throws Exception {
+				// TODO Auto-generated method stub
+				
+			}
 		})));
 
 		try {

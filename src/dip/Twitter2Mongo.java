@@ -34,7 +34,7 @@ public class Twitter2Mongo {
 			core.addReader(new RunnableReader<Object, String>(inputQueue, reader));
 
 			Converter<String, DBObject> converter = new JSONStringtoMongoDBObjectConverter();
-			core.addConverter(new RunnableConverter<String, DBObject>(inputQueue, outputQueue, converter));
+			core.addProcessor(new RunnableConverter<String, DBObject>(inputQueue, outputQueue, converter));
 
 			MongoCollectionFactory factory = new MongoCollectionFactory("thecave.cs.clemson.edu", 27017);
 			Writer<DBObject, DBCollection> writer = new MongoWriter(factory.getCollection("twitter", "feed"));

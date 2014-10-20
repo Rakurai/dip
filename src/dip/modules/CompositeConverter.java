@@ -19,8 +19,10 @@ public class CompositeConverter<INPUT extends Object, OUTPUT extends Object> ext
 	public OUTPUT convert(INPUT in, Metadata metadata) throws Exception {
 		Object obj = (Object) in;
 		for (Converter<Object, Object> converter: chain) {
-			if (obj == null)
-				throw new Exception("obj is null at converter stage " + chain.indexOf(converter));
+			if (obj == null) {
+//				System.out.println("obj is null at converter stage " + chain.indexOf(converter));
+				return null;
+			}
 			obj = converter.convert(obj, metadata);
 		}
 		return (OUTPUT)obj;

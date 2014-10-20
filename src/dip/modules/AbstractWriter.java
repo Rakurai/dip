@@ -20,11 +20,12 @@ public abstract class AbstractWriter<INPUT, OUTPUT> extends AbstractModule imple
 			public void release(OUTPUT val) {
 				// do nothing
 			}
+			
+			@Override
+			public void cleanup() {
+				// do nothing
+			}
 		});
-	}
-
-	public AbstractWriter() {
-		this((OUTPUT)null);
 	}
 	
 	@Override

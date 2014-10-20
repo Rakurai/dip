@@ -17,5 +17,19 @@
 	<classpathentry kind="lib" path="jars/cassandra-dependencies/cassandra-driver-core-2.0.2.jar"/>
 	<classpathentry kind="lib" path="jars/cassandra-dependencies/cassandra-driver-dse-2.0.2.jar"/>
 	<classpathentry kind="lib" path="jars/nagasena.jar"/>
+	<classpathentry kind="lib" path="/Users/jason/git/jackson/jackson-dataformat-xml/target/jackson-dataformat-xml-2.4.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="/Users/jason/git/jackson/jackson-databind/target/jackson-databind-2.4.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="/Users/jason/git/jackson/jackson-core/target/jackson-core-2.4.2-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="/Users/jason/git/jackson/jackson-module-jaxb-annotations/target/jackson-module-jaxb-annotations-2.4.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="/Users/jason/git/jackson/jackson-annotations/target/jackson-annotations-2.4.2-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="/Users/jason/git/jackson/jackson-jr/jr-all/target/jackson-jr-all-2.4.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="/Users/jason/Downloads/xerces-2_11_0 3/xml-apis.jar"/>
+	<classpathentry kind="lib" path="/Users/jason/Downloads/xerces-2_11_0 3/resolver.jar"/>
+	<classpathentry kind="lib" path="/Users/jason/Downloads/xerces-2_11_0 3/serializer.jar"/>
+	<classpathentry kind="lib" path="/Users/jason/Downloads/xerces-2_11_0 3/xercesImpl.jar"/>
+	<classpathentry kind="lib" path="/Users/jason/guava-18.0.jar"/>
+	<classpathentry kind="lib" path="/Users/jason/Downloads/httpcomponents-client-4.3.5/lib/httpclient-4.3.5.jar"/>
+	<classpathentry kind="lib" path="/Users/jason/Downloads/httpcomponents-core-4.3.2/lib/httpcore-4.3.2.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -38,9 +38,12 @@ public class RunnableReader<INPUT, OUTPUT> extends AbstractRunnableModule {
 	}
 
 	protected OUTPUT read(Metadata metadata) throws Exception {
+		OUTPUT obj = null;
 		INPUT inputVector = reader.acquireInputVector(metadata);
-		OUTPUT obj = reader.read(inputVector, metadata);
-		reader.releaseInputVector(inputVector);
+		if (inputVector != null) {
+			obj = reader.read(inputVector, metadata);
+			reader.releaseInputVector(inputVector);
+		}
 		return obj;
 	}
 

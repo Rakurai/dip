@@ -7,14 +7,11 @@ import dip.modules.Converter;
 import dip.modules.Module;
 import dip.core.RunState.State;
 
-public class RunnableConverter<INPUT, OUTPUT> extends AbstractRunnableModule {
-	private BlockingQueue<INPUT> input;
-	private BlockingQueue<OUTPUT> output;
+public class RunnableConverter<INPUT, OUTPUT> extends AbstractRunnableProcessor<INPUT, OUTPUT> {
 	private Converter<INPUT, OUTPUT> converter;
 
 	public RunnableConverter(BlockingQueue<INPUT> input, BlockingQueue<OUTPUT> output, Converter<INPUT, OUTPUT> converter) {
-		this.input = input;
-		this.output = output;
+		super(input, output);
 		this.converter = converter;
 	}
 
@@ -34,11 +31,12 @@ public class RunnableConverter<INPUT, OUTPUT> extends AbstractRunnableModule {
 				Metadata metadata = core.getRegistry().deregister(in);
 				OUTPUT out = converter.convert(in, metadata);
 				
-				if (out != null) {
-					core.getRegistry().register(out, metadata);
-					output.put(out);
-					incrementCounter();
-				}
+				if (out == null)
+					continue; // drop from the pipeline
+
+				core.getRegistry().register(out, metadata);
+				output.put(out);
+				incrementCounter();
 			}
 		} catch (Exception e) {
 			throw new RuntimeException(e);

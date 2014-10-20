@@ -114,7 +114,8 @@ public class CoreWorker implements Runnable {
 		for (RunnableModule module: readers)
 			module.getModule().cleanup();
 		for (RunnableModule module: converters)
-			module.getModule().cleanup();
+			if (module.getModule() != null) // manifolds have null modules
+				module.getModule().cleanup();
 		for (RunnableModule module: writers)
 			module.getModule().cleanup();
 

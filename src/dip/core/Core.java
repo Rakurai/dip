@@ -22,7 +22,7 @@ public class Core {
 		readers.add(module);
 	}
 
-	public void addConverter(RunnableConverter<?, ?> module) {
+	public void addProcessor(AbstractRunnableProcessor<?, ?> module) {
 		addModule(module);
 		converters.add(module);
 	}

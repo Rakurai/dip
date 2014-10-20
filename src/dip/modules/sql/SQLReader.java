@@ -24,7 +24,7 @@ public class SQLReader extends AbstractReader<ResultSet, Map<String, Object>> {
 		if (!rs.next())
 			return null;
 
-		for (int i = 0; i < metaData.getColumnCount(); i++)
+		for (int i = 1; i <= metaData.getColumnCount(); i++)
 			map.put(metaData.getColumnName(i), rs.getObject(i));
 
 		return map;

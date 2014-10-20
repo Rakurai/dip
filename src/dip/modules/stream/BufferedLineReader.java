@@ -1,4 +1,4 @@
-package dip.modules.file;
+package dip.modules.stream;
 
 import java.io.BufferedReader;
 import java.io.File;

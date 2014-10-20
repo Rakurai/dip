@@ -10,7 +10,7 @@ public class KeyValueMerger extends
 
 	private String delimiter;
 
-	protected KeyValueMerger(String delimiter) {
+	public KeyValueMerger(String delimiter) {
 		this.delimiter = delimiter;
 	}
 

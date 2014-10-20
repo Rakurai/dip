@@ -16,14 +16,19 @@ public class HBaseTableFactory {
 	private HBaseAdmin hbase;
 	private Configuration conf;
 
+	public HBaseTableFactory(Configuration conf) throws MasterNotRunningException, ZooKeeperConnectionException, IOException {
+		this.conf = conf;
+		hbase = new HBaseAdmin(conf);
+	}
+	
 	public HBaseTableFactory(String hbaseSitePath, String host, int port) throws MasterNotRunningException, ZooKeeperConnectionException, IOException {
 		conf = HBaseConfiguration.create();
 		conf.addResource(hbaseSitePath);
 		conf.set("hbase.master", host + ":" + port);
 		hbase = new HBaseAdmin(conf);
 	}
-	
-	public HTable getTable(String db_name, String table_name) throws IOException {
+
+	public HTable getTable(String table_name) throws IOException {
 		if (!hbase.tableExists(table_name)){
 			HTableDescriptor new_table = new HTableDescriptor(TableName.valueOf("table_name"));
 			new_table.addFamily(new HColumnDescriptor("content"));

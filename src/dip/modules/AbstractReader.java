@@ -20,6 +20,11 @@ public abstract class AbstractReader<INPUT, OUTPUT> extends AbstractModule imple
 			public void release(INPUT val) {
 				// do nothing
 			}
+
+			@Override
+			public void cleanup() throws Exception {
+				// do nothing
+			}
 		});
 	}
 

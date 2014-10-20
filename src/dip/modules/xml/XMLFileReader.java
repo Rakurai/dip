@@ -14,8 +14,8 @@ import dip.modules.IOMapper;
 public class XMLFileReader extends AbstractReader<File, Document> {
 	private DocumentBuilder builder;
 
-	public XMLFileReader(IOMapper<File> mapper) throws Exception {
-		super(mapper);
+	public XMLFileReader(IOMapper<File> ioMapper) throws Exception {
+		super(ioMapper);
 		this.builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 	}
 
